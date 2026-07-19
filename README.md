@@ -117,6 +117,23 @@ of the editors. Per-text numbers are in *About this edition* on every page.
 | **Missing chapter and dialogue headings** | some editions have no section titles yet; being added by hand |
 | The editor's **own** slips | occasionally a note cites a line number that is off by one or two. We do not correct these, and **we cannot detect them** — the anchoring is internally consistent either way. |
 
+## Still being worked on
+
+- **Core vocabulary.** Some editions carry a much shorter core list than the print
+  does — the Crito has 11 words where its book prints about a hundred, and Cebes'
+  Tablet 42. Those lists are being read back from the editors' PDFs. Note that a
+  missing core list is not always a fault: several Hayes & Nimis editions, such as
+  Plutarch's *Dialogue on Love*, gloss every word on its own page and never print a
+  separate core list at all.
+- **Section and dialogue titles.** Most editions have no headings yet, so a page
+  gives you the text but not where you are in the work. The titles exist in the
+  printed pages and are being added by hand, edition by edition.
+- **Speaker names.** Done for the drama and the dialogues that had them, and read
+  from the print for Cebes' Tablet; a few editions may still be missing turns.
+
+If something looks wrong in a text, please open an issue — it is useful to know
+which page.
+
 ## How it was made
 
 Each edition was OCR'd from the editor's own PDF, then a neural pass anchored every note to the word it
