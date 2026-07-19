@@ -97,8 +97,9 @@ first — buy a print copy or send them something. That matters more than anythi
 
 ### Quillful's Ventures
 
-[site](https://quillful.blogspot.com/p/commentaries.html) · [books in print](https://www.amazon.com/dp/B0BRZXT2KX) · [David F. Driscoll — commentaries](https://davidfdriscoll.blogspot.com/) · [Weekday Greek — reading notes](https://weekdaygreek.blogspot.com/)
+[site](https://quillful.blogspot.com/p/commentaries.html) · [books in print](https://www.amazon.com/dp/B0BRZXT2KX) · [David F. Driscoll — commentaries](https://davidfdriscoll.blogspot.com/) · [Weekday Greek — reading notes](https://weekdaygreek.blogspot.com/) · [a list of Greek & Latin facing-notes commentaries](https://docs.google.com/document/d/1SatDAImXUZW23zCy6u9SAQIm1ovCVOTY9nUyXzfIxjQ/edit)
 > The Batrachomyomachia is by David F. Driscoll and Bayla Kamens.
+> David F. Driscoll keeps a list of the commentaries he knows of that have facing notes and/or vocabulary in Greek and Latin, and welcomes additions.
 
 | Text | Author | Pages | Lines | Notes | Source |
 |---|---|--:|--:|--:|---|
