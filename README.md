@@ -159,6 +159,12 @@ Within a page the numbers are consistent with the commentary, which is what they
 - **Speaker names.** Done for the drama and the dialogues that had them, and read
   from the print for Cebes' Tablet; a few editions may still be missing turns.
 
+- **A word here and there in a page's vocabulary.** The list beside each page is
+  rebuilt from the print and is usually complete, but a handful of words per book
+  can still be short of it — a rare form the OCR dropped, or a headword our data
+  never captured. When you want a word the page glosses and do not find it in the
+  column, a double-click still opens the full lexicon for it.
+
 If something looks wrong in a text, please open an issue — it is useful to know
 which page.
 
