@@ -151,11 +151,11 @@ Within a page the numbers are consistent with the commentary, which is what they
   the Crito use ten. Several Hayes & Nimis editions, such as Plutarch's *Dialogue on
   Love*, gloss every word on its own page and print no core list at all. The
   remaining editions have not been checked against their print one by one.
-- **Section titles inside a single work.** The 10 editions that gather several
-  works under one cover now name each one — Lucian's dialogues, Galen's three
-  treatises, Aelius Aristides' five hymns. What is still missing is the finer
-  division *within* a long single work, where the printed book marks scenes or
-  chapters; those headings are not in our data yet.
+- **Section titles.** Done. The 10 editions that gather several works under one
+  cover now name each one — Lucian's dialogues, Galen's three treatises, Aelius
+  Aristides' five hymns. Editions holding several books of a single work, such as the
+  Homeric ones and Genesis, carry no heading on purpose: their line references already
+  begin with the book or chapter, so a heading would only repeat it.
 - **Speaker names.** Done for the drama and the dialogues that had them, and read
   from the print for Cebes' Tablet; a few editions may still be missing turns.
 
