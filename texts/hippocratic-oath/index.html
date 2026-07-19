@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en" data-theme="sepia" data-nums="on" data-marks="on" data-voc="on" data-notes="off" data-order="tnv" data-flow="off" data-focus="off" data-span="one">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hippocrates, The Hippocratic Oath</title>
+<meta name="description" content="Hippocrates, The Hippocratic Oath — a page-by-page reading edition: hover a word for the commentary, click it for Alpheios.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2efe4; --paper:#fffdf6; --ink:#1d1c18; --muted:#7a7566; --rule:#e6e0cc;
+  --accent:#6b5a2e; --head:#2f3b2f; --headink:#f1ecda; --mark:#ffe89a; --underline:#cabb92;
+  --fs:21px; --lh:1.95;
+}
+html[data-theme="light"]{ --bg:#f3f4f6; --paper:#fff; --ink:#16181d; --muted:#6b7280; --rule:#e5e7eb; --head:#1f2937; --headink:#f9fafb; --underline:#c9cdd4; }
+html[data-theme="dark"]{ --bg:#101216; --paper:#1b1e24; --ink:#e6e3da; --muted:#9aa0aa; --rule:#2c313a; --accent:#c8ab6a; --head:#0f1114; --headink:#e6e3da; --mark:#5a4a1c; --underline:#575d69; }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;display:flex;flex-direction:column;-webkit-text-size-adjust:100%}
+header.site{background:var(--head);color:var(--headink);flex:0 0 auto}
+header .wrap{max-width:2000px;margin:0 auto;padding:9px 18px;display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+header h1{margin:0;font-size:15.5px;font-weight:600}
+header .byline{margin:1px 0 0;font-size:12px;opacity:.7}
+header .grow{flex:1}
+.btn{font:inherit;font-size:12.5px;padding:5px 9px;border:1px solid #ffffff2e;background:#ffffff12;color:inherit;border-radius:7px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:#ffffff20}
+.btn.on{background:var(--headink);color:var(--head);border-color:transparent}
+
+/* ── Сторінка гортається, не скролиться. Текст ліворуч, словник — колонкою
+      праворуч (вимикається). Коментар — попап біля слова, по одинарному кліку. ── */
+main{flex:1 1 auto;display:flex;flex-direction:column;max-width:2000px;width:100%;margin:0 auto;padding:20px 20px 0;min-height:0}
+/* Лист НЕ скролиться сам: інакше виходить два вкладені скроли (лист + словник).
+   Кожна колонка їздить окремо у межах сторінки фіксованої висоти. */
+.sheet{flex:1 1 auto;background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:26px 30px 22px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+/* обгортка #pages мусить сама тягнутися на всю висоту листа, інакше
+   height:100% у .pg впирається в її auto-висоту й скролиться лист */
+#pages{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.pg{display:flex;flex-direction:column;height:100%;min-height:0}
+/* авторський display перебиває атрибут hidden — без цього всі сторінки в потоці */
+.pg[hidden]{display:none}
+/* flex, а не grid: ширина належить самому блоку, тому текст лишається широким
+   у будь-якій позиції — і всі шість порядків колонок працюють без окремих правил */
+.pgbody{flex:1 1 auto;display:flex;gap:0 30px;align-items:stretch;min-height:0}
+.txt{flex:1 1 0;min-width:22em}
+.notes{flex:1 1 21em;max-width:30em}
+.voc{flex:1 1 18em;max-width:27em}
+html[data-notes="off"] .notes{display:none}
+html[data-order="tnv"] .txt{order:1} html[data-order="tnv"] .notes{order:2} html[data-order="tnv"] .voc{order:3}
+html[data-order="tvn"] .txt{order:1} html[data-order="tvn"] .voc{order:2}   html[data-order="tvn"] .notes{order:3}
+html[data-order="ntv"] .notes{order:1} html[data-order="ntv"] .txt{order:2} html[data-order="ntv"] .voc{order:3}
+html[data-order="vtn"] .voc{order:1}   html[data-order="vtn"] .txt{order:2} html[data-order="vtn"] .notes{order:3}
+html[data-order="nvt"] .notes{order:1} html[data-order="nvt"] .voc{order:2} html[data-order="nvt"] .txt{order:3}
+html[data-order="vnt"] .voc{order:1}   html[data-order="vnt"] .notes{order:2} html[data-order="vnt"] .txt{order:3}
+html[data-voc="off"] .voc{display:none}
+html[data-focus="on"] header.site{display:none}
+#unfocus{position:fixed;top:10px;right:14px;z-index:75;display:none;border:1px solid var(--rule);background:var(--paper);color:var(--ink);opacity:.7}
+#unfocus:hover{opacity:1}
+html[data-focus="on"] #unfocus{display:block}
+.txt{min-width:0;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-right:10px}
+.ptitle{margin:0 0 16px;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.lines{font-family:"Gentium Plus","Palatino Linotype",Cardo,Georgia,serif;font-size:var(--fs);line-height:var(--lh);max-width:36em;margin:0 auto}
+.ln{display:flex;gap:14px;align-items:baseline}
+.ln .num{flex:0 0 1.8em;text-align:right;font-family:Inter,sans-serif;font-size:11px;color:var(--muted);opacity:.55;user-select:none;font-variant-numeric:tabular-nums}
+/* ховаємо лише «німі» номери: на номері з коментарем висить сам коментар,
+   сховати його = втратити доступ до нотатки */
+html[data-nums="off"] .ln .num:not(.w){visibility:hidden}
+.ln .t{flex:1}
+/* Склеєний текст: друковані переноси зникають, номери стають надрядковими.
+   Для прози читається природніше; для віршів лишається порядковий режим. */
+html[data-flow="on"] .lines{display:block}
+html[data-flow="on"] .ln{display:inline}
+html[data-flow="on"] .ln .t{display:inline}
+html[data-flow="on"] .ln .t::after{content:" "}
+/* склеєний перенос: дефіс зникає, пробіл між рядками теж */
+html[data-flow="on"] .ln.hyph .hy{display:none}
+html[data-flow="on"] .ln.hyph .t::after{content:""}
+html[data-flow="on"] .ln.hyph + .ln .num:not(.w){display:none}
+html[data-flow="on"] .ln .num{display:inline;flex:none;font-size:10px;vertical-align:super;margin-right:2px;opacity:.45}
+/* і тут теж лише «німі»: номер із коментарем — єдиний спосіб його відкрити */
+html[data-flow="on"][data-nums="off"] .ln .num:not(.w){display:none}
+.w,.p{border-radius:2px}
+/* підкреслення = є коментар; приглушене, бо під ним третина слів */
+html[data-marks="on"] .w{border-bottom:1px dotted var(--underline)}
+.w:hover,.w.on{background:var(--mark);border-bottom-color:transparent}
+.w{cursor:pointer}
+
+/* Словник сторінки — колонка праворуч від тексту. Ширина ~24em: у ній більшість
+   статей лягає в один рядок, тому колонка вдвічі нижча, ніж у вузькій. */
+/* На щільних сторінках 40+ статей вищі за екран. Прокручується САМЕ СЛОВНИК, а не
+   сторінка: текст лишається на місці цілим. Це не випадок DCC — там незалежний
+   скрол ламав відповідність нотаток рядкам, а словнику нема з чим вирівнюватися. */
+.notes{border-inline-start:1px solid var(--rule);padding-inline-start:24px;font-size:13.2px;line-height:1.55;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.notes h3{margin:0 0 10px;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.sn{display:grid;grid-template-columns:2em 1fr;gap:0 8px;margin:0 0 .55em;padding:2px 5px;margin-left:-5px;border-radius:5px;scroll-margin:8px}
+.sn .snref{font-size:10.5px;text-align:right;color:var(--muted);opacity:.5;padding-top:.25em;font-variant-numeric:tabular-nums}
+.sn b{font-family:"Gentium Plus",Georgia,serif;font-weight:600;font-size:14.6px}
+.sn.lit{background:var(--mark)}
+.sn.lit .snref{opacity:1;color:var(--accent)}
+.voc{border-inline-start:1px solid var(--rule);padding-inline-start:26px;font-size:13px;line-height:1.45;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.voc h3{margin:0 0 10px;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.voc dl{margin:0}
+.voc dl div{margin:0 0 5px}
+.voc dt{display:inline;font-family:"Gentium Plus",Georgia,serif;font-size:14.6px}
+.voc dd{display:inline;margin:0 0 0 .35em;color:var(--muted);font-size:12.6px}
+
+/* Коментар — попап біля слова: ніякого руху очей, і не з'їдає постійне місце
+   внизу. Стійкий саме тому, що відкривається кліком, а не наведенням. */
+#pop{position:fixed;z-index:80;max-width:min(430px,92vw);background:var(--paper);border:1px solid var(--rule);border-radius:8px;box-shadow:0 6px 26px #00000022;padding:11px 30px 11px 14px;font-size:13.6px;line-height:1.58;display:none}
+#pop b{font-family:"Gentium Plus",Georgia,serif;font-weight:600;font-size:15.4px}
+#pop .x{position:absolute;top:3px;right:4px;border:0;background:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;line-height:1;padding:4px 6px;border-radius:5px}
+#pop .x:hover{color:var(--ink);background:#0000000d}
+
+nav.pager{flex:0 0 auto;max-width:2000px;width:100%;margin:0 auto;padding:12px 18px 18px;display:flex;gap:10px;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
+nav.pager .btn{border-color:var(--rule);background:transparent;color:var(--ink)}
+nav.pager select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--rule);border-radius:7px;background:var(--paper);color:var(--ink);max-width:270px}
+nav.pager .of{font-variant-numeric:tabular-nums}
+nav.pager .span{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+/* кілька сторінок поспіль: аркуш знову скролиться, а колонки — ні */
+html[data-span="many"] .sheet{overflow:auto}
+/* Розворот = ОДНА сторінка: рядки, коментар і словник кількох сторінок
+   зливаються у три наскрізні колонки (див. mergeInto/restoreAll у скрипті).
+   Стопка окремих блоків замість цього — саме те, чого робити не треба. */
+/* Розворот лишається ОДНІЄЮ сторінкою з трьома колонками, тож і скрол той самий:
+   аркуш не їде, кожна колонка крутиться сама. Окремих правил для багатьох
+   сторінок не треба — вони лишилися від старої «стопки» і лише все ламали. */
+.pbrk{margin:14px 0 10px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);opacity:.5;border-top:1px dotted var(--rule);padding-top:8px}
+.voc .pbrk,.notes .pbrk{margin:12px 0 8px}
+
+dialog#info{border:1px solid var(--rule);border-radius:12px;background:var(--paper);color:var(--ink);max-width:560px;width:calc(100% - 32px);padding:22px 24px}
+dialog#info::backdrop{background:#0007}
+dialog#info h3{margin:0 0 12px;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
+dialog#info dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:7px 16px;font-size:13.5px;line-height:1.5}
+dialog#info dt{color:var(--muted)} dialog#info dd{margin:0} dialog#info a{color:var(--accent)}
+dialog#info .credit{font-size:12.8px;color:var(--muted);line-height:1.55;margin:14px 0 0}
+dialog#info .close{margin-top:16px;width:100%;border-color:var(--rule);background:transparent;color:var(--ink)}
+dialog#core{border:1px solid var(--rule);border-radius:12px;background:var(--paper);color:var(--ink);max-width:860px;width:calc(100% - 32px);max-height:80vh;padding:22px 24px}
+dialog#core::backdrop{background:#0007}
+dialog#core h3{margin:0 0 6px;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
+dialog#core p.sub{margin:0 0 14px;font-size:13px;color:var(--muted);font-style:italic}
+dialog#core dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:3px 30px;margin:0;font-size:13.5px}
+dialog#core dl div{display:grid;grid-template-columns:auto 1fr;gap:0 10px}
+dialog#core dt{font-family:"Gentium Plus",Georgia,serif;white-space:nowrap}
+dialog#core dd{margin:0;color:var(--muted)}
+dialog#core i{opacity:.5;font-style:normal;font-size:11px}
+dialog#allnotes{border:1px solid var(--rule);border-radius:12px;background:var(--paper);color:var(--ink);max-width:680px;width:calc(100% - 32px);max-height:78vh;padding:22px 24px}
+dialog#allnotes::backdrop{background:#0007}
+dialog#allnotes h3{margin:0 0 12px;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
+dialog#allnotes .body{font-size:13.6px;line-height:1.58;margin:0 0 .6em;padding-bottom:.6em;border-bottom:1px solid var(--rule)}
+dialog#allnotes .body:last-of-type{border-bottom:0}
+dialog#allnotes .body b{font-family:"Gentium Plus",Georgia,serif;font-weight:600;font-size:15.2px}
+dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);background:transparent;color:var(--ink)}
+
+@media(max-width:900px){
+  .pgbody{grid-template-columns:minmax(0,1fr);gap:0}
+  .sheet{overflow:auto}
+  .pg{height:auto;min-height:100%}
+  .txt,.voc{overflow:visible;min-height:0;padding-right:0}
+  .notes,.voc{border-left:0;border-top:1px solid var(--rule);padding:16px 0 0;margin-top:18px;overflow:visible}
+  html[data-notes="on"][data-voc="on"] .pgbody{grid-template-columns:minmax(0,1fr)}
+  .voc dl{column-width:200px;column-gap:24px}
+  .voc dl div{break-inside:avoid}
+  .sheet{padding:20px 16px}
+  main{padding:12px 10px 0}
+  /* гортач не влазить у 375px: селектор сторінки має стискатися */
+  nav.pager{flex-wrap:wrap;padding:10px 10px 14px;gap:8px}
+  nav.pager select{max-width:150px;flex:0 1 auto;min-width:0}
+}
+@media print{ header.site,nav.pager{display:none} .pg[hidden]{display:block!important} body{background:#fff} .sheet{border:0;overflow:visible} }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <div>
+      <a href="../../index.html" style="color:inherit;opacity:.7;font-size:12px;text-decoration:none">← all editions</a>
+      <h1>Hippocrates, The Hippocratic Oath</h1>
+      <p class="byline">Evan Hayes and Stephen Nimis</p>
+    </div>
+    <span class="grow"></span>
+    <button class="btn" id="tNotes" title="Show the commentary as a column">Commentary</button>
+    <button class="btn" id="tVoc" title="Show the running vocabulary for this page">Vocabulary</button>
+    <button class="btn" id="tSwap" title="Swap the two side columns">⇄</button>
+    <button class="btn" id="tCore">Core</button>
+    <button class="btn" id="tAll" title="Show every note on this page at once">All notes</button>
+    <button class="btn" id="tFlow" title="Run the text on, ignoring the print line breaks">¶</button>
+    <button class="btn" id="tMarks" title="Underline words that carry a note">⌇</button>
+    <button class="btn" id="tNums" title="Line numbers">№</button>
+    <button class="btn" id="tMinus" title="Smaller">A−</button>
+    <button class="btn" id="tPlus" title="Larger">A+</button>
+    <button class="btn" id="tTheme" title="Theme">◐</button>
+    <button class="btn" id="tFocus" title="Hide the top bar (Esc to bring it back)">⤢</button>
+    <button class="btn" id="tAlph" title="Alpheios: click any word for dictionary and morphology">α</button>
+    <button class="btn" id="tInfo" title="About">ⓘ</button>
+  </div>
+</header>
+
+<main>
+  <div class="sheet">
+    <div id="pages" class="alpheios-enabled" lang="grc"><article class="pg" id="p1" data-page="1">
+  <div class="pgbody">
+    <div class="txt"><div class="lines"><div class="ln"><span class="num">1</span><span class="t"><span class="p">ὄμνυμι</span> <span class="p">Ἀπόλλωνα</span> <span class="p">ἰητρὸν</span> <span class="p">καὶ</span> <span class="w" data-n="n1">Ἀσκληπιὸν</span> <span class="p">καὶ</span> <span class="w" data-n="n2">Ὑγείαν</span> <span class="p">καὶ</span> <span class="p">Πανάκειαν</span></span></div><div class="ln"><span class="num">2</span><span class="t"><span class="p">καὶ</span> <span class="p">θεοὺς</span> <span class="p">πάντας</span> <span class="p">τε</span> <span class="p">καὶ</span> <span class="p">πάσας,</span> <span class="p">ἵστορας</span> <span class="w" data-n="n3">ποιεύμενος,</span></span></div><div class="ln"><span class="num">3</span><span class="t"><span class="w" data-n="n4">ἐπιτελέα</span> <span class="w" data-n="n5">ποιήσειν</span> <span class="p">κατὰ</span> <span class="p">δύναμιν</span> <span class="p">καὶ</span> <span class="p">κρίσιν</span> <span class="p">ἐμὴν</span> <span class="p">ὅρκον</span> <span class="p">τόνδε</span></span></div><div class="ln"><span class="num">4</span><span class="t"><span class="p">καὶ</span> <span class="p">συγγραφὴν</span> <span class="p">τήνδε:</span> <span class="w" data-n="n6">ἡγήσεσθαι</span> <span class="p">μὲν</span> <span class="w" data-n="n7">τὸν</span> <span class="w" data-n="n7">διδάξαντά</span> <span class="p">με</span> <span class="p">τὴν</span> <span class="p">τέχνην</span> <span class="p">ταύτην</span></span></div><div class="ln"><span class="num w" data-n="L9">5</span><span class="t"><span class="w" data-n="n8">ἴσα</span> <span class="p">γενέτῃσιν</span> <span class="p">ἐμοῖς,</span> <span class="p">καὶ</span> <span class="p">βίου</span> <span class="p">κοινώσεσθαι,</span></span></div><div class="ln"><span class="num">6</span><span class="t"><span class="p">καὶ</span> <span class="w" data-n="n10">χρεῶν</span> <span class="w" data-n="n11">χρηΐζοντι</span> <span class="p">μετάδοσιν</span> <span class="w" data-n="n12">ποιήσεσθαι,</span></span></div><div class="ln"><span class="num">7</span><span class="t"><span class="p">καὶ</span> <span class="p">γένος</span> <span class="w" data-n="n13">τὸ</span> <span class="w" data-n="n13">ἐξ</span> <span class="w" data-n="n13">αὐτοῦ</span> <span class="p">ἀδελφοῖς</span> <span class="w" data-n="n14">ἴσον</span> <span class="w" data-n="n15">ἐπικρινεῖν</span> <span class="p">ἄρρεσι,</span></span></div></div></div>
+    <aside class="notes" data-alpheios-ignore="all"><h3>Commentary</h3><div class="sn" id="n1"><span class="snref">1</span><span class="snb"><b>Ἀσκληπιὸν</b> acc. with ὄμνυμι “I swear by Asclepius” Asclepius is the son of Apollo and the god of healing</span></div><div class="sn" id="n2"><span class="snref">1</span><span class="snb"><b>Ὑγείαν</b> “Hygene” and “Panacea” are two of the daughters of Asclepius</span></div><div class="sn" id="n3"><span class="snref">2</span><span class="snb"><b>ποιεύμενος</b> pr. part. nom. (=ποιούμενος) “I, making them witnesses”</span></div><div class="sn" id="n4"><span class="snref">3</span><span class="snb"><b>ἐπιτελέα</b> acc. pred. agreeing with ὅρκον “to make the oath accomplished”</span></div><div class="sn" id="n5"><span class="snref">3</span><span class="snb"><b>ποιήσειν</b> fut. inf. complementing ὄμνυμι</span></div><div class="sn" id="n6"><span class="snref">4</span><span class="snb"><b>ἡγήσεσθαι</b> fut. inf. also complementing ὄμνυμι “I swear to consider”</span></div><div class="sn" id="n7"><span class="snref">4</span><span class="snb"><b>τὸν διδάξαντα</b> ao. part. “the one who taught me”</span></div><div class="sn" id="n8"><span class="snref">5</span><span class="snb"><b>ἴσα</b> neut. pl. acc. adverbial, “equally to” + dat.</span></div><div class="sn" id="L9"><span class="snref">5</span><span class="snb"><b>κοινώσασθαι</b> fut. inf. with ὄμνυμι “to be a partner of” + gen.</span></div><div class="sn" id="n10"><span class="snref">6</span><span class="snb"><b>χρεῶν</b> gen. pl. after μετάδοσιν “sharing of needed things”</span></div><div class="sn" id="n11"><span class="snref">6</span><span class="snb"><b>χρηΐζοντι</b> pr. part. dat. ind. obj. “to him needing”</span></div><div class="sn" id="n12"><span class="snref">6</span><span class="snb"><b>ποιήσεσθαι</b> fut. inf. also after ὄμνυμι “to make a sharing” i.e. to share + gen.</span></div><div class="sn" id="n13"><span class="snref">7</span><span class="snb"><b>τὸ ἐξ αὐτοῦ</b> an attributive phrase modifying γένος “the offspring of him”</span></div><div class="sn" id="n14"><span class="snref">7</span><span class="snb"><b>ἴσον</b> neut. acc. pred. of γένος “to consider the family equal to” + dat.</span></div><div class="sn" id="n15"><span class="snref">7</span><span class="snb"><b>ἐπικρινεῖν</b> fut. inf. after ὄμνυμι</span></div></aside>
+    <aside class="voc" data-alpheios-ignore="all"><h3>Vocabulary</h3><dl><div><dt>ἀδελφός, ὁ</dt><dd>a brother</dd></div><div><dt>Ἀπόλλων, -ωνος, ὁ</dt><dd>Apollo</dd></div><div><dt>ἄρρην, -εν</dt><dd>male</dd></div><div><dt>Ἀσκληπιός, ὁ</dt><dd>Asclepius</dd></div><div><dt>βίος, ὁ</dt><dd>life</dd></div><div><dt>γενέτης, -ου, ὁ</dt><dd>a father, parent</dd></div><div><dt>γένος, -εος, τό</dt><dd>a race, family</dd></div><div><dt>διδάσκω</dt><dd>to teach X (acc.) to Y (acc.)</dd></div><div><dt>δύναμις, -ιος, ἡ</dt><dd>power, strength, ability</dd></div><div><dt>ἐπικρίνω</dt><dd>to decide, consider</dd></div><div><dt>ἐπιτελής, -ές</dt><dd>completed, accomplished</dd></div><div><dt>ἡγέομαι</dt><dd>to go before, consider</dd></div><div><dt>ἰητρός, ὁ</dt><dd>one who heals, a physician</dd></div><div><dt>ἴσος, -η, -ον</dt><dd>equal to, the same as</dd></div><div><dt>ἵστωρ, -ορος, ὁ</dt><dd>a judge, witness</dd></div><div><dt>κοινόω</dt><dd>to make common, be a partner in (+ gen.)</dd></div><div><dt>κρίσις, -ιος, ἡ</dt><dd>discernment, judgment</dd></div><div><dt>μετάδοσις, -εως, ἡ</dt><dd>a giving, sharing</dd></div><div><dt>ὄμνυμι</dt><dd>to swear</dd></div><div><dt>ὅρκος, ὁ</dt><dd>an oath</dd></div><div><dt>Πανάκεια, ἡ</dt><dd>Panacea</dd></div><div><dt>ποιέω</dt><dd>to make, do</dd></div><div><dt>συγγραφή, ἡ</dt><dd>a written contract, bond</dd></div><div><dt>τέχνη, ἡ</dt><dd>art, skill</dd></div><div><dt>Ὑγεία, ἡ</dt><dd>Hygene</dd></div><div><dt>χρέος, τό</dt><dd>something needed</dd></div><div><dt>χρῄζω</dt><dd>to need, lack</dd></div></dl></aside>
+  </div>
+</article>
+<article class="pg" id="p2" data-page="2" hidden>
+  <div class="pgbody">
+    <div class="txt"><div class="lines"><div class="ln"><span class="num">8</span><span class="t"><span class="p">καὶ</span> <span class="w" data-n="n16">διδάξειν</span> <span class="p">τὴν</span> <span class="p">τέχνην</span> <span class="p">ταύτην,</span> <span class="w" data-n="n17">ἢν</span> <span class="w" data-n="n17">χρηΐζωσι</span> <span class="p">μανθάνειν,</span> <span class="p">ἄνευ</span> <span class="p">μισθοῦ</span></span></div><div class="ln"><span class="num">9</span><span class="t"><span class="p">καὶ</span> <span class="p">συγγραφῆς,</span> <span class="p">παραγγελίης</span> <span class="p">τε</span> <span class="p">καὶ</span> <span class="w" data-n="n18">ἀκροήσιος</span> <span class="p">καὶ</span> <span class="p">τῆς</span> <span class="p">λοιπῆς</span> <span class="p">ἁπάσης</span> <span class="w" data-n="n18">μαθήσιος</span></span></div><div class="ln"><span class="num">10</span><span class="t"><span class="p">μετάδοσιν</span> <span class="w" data-n="n19">ποιήσεσθαι</span> <span class="w" data-n="n20">υἱοῖς</span> <span class="p">τε</span> <span class="p">ἐμοῖς</span> <span class="p">καὶ</span> <span class="w" data-n="n20">τοῖς</span> <span class="w" data-n="n21">τοῦ</span> <span class="p">ἐμὲ</span> <span class="w" data-n="n21">διδάξαντος,</span></span></div><div class="ln"><span class="num">11</span><span class="t"><span class="p">καὶ</span> <span class="p">μαθητῇσι</span> <span class="w" data-n="n22">συγγεγραμμένοις</span> <span class="p">τε</span> <span class="p">καὶ</span> <span class="w" data-n="n23">ὡρκισμένοις</span> <span class="p">νόμῳ</span> <span class="p">ἰητρικῷ,</span> <span class="w" data-n="n24">ἄλλῳ</span> <span class="w" data-n="n24">δὲ</span> <span class="w" data-n="n24">οὐδενί.</span></span></div><div class="ln"><span class="num">12</span><span class="t"><span class="w" data-n="n26">διαιτήμασί</span> <span class="p">τε</span> <span class="p">χρήσομαι</span> <span class="w" data-n="n25">ἐπ᾽</span> <span class="w" data-n="n25">ὠφελείῃ</span> <span class="p">καμνόντων</span> <span class="p">κατὰ</span> <span class="p">δύναμιν</span> <span class="p">καὶ</span> <span class="p">κρίσιν</span> <span class="p">ἐμήν,</span></span></div><div class="ln"><span class="num">13</span><span class="t"><span class="w" data-n="n27">ἐπὶ</span> <span class="w" data-n="n27">δηλήσει</span> <span class="p">δὲ</span> <span class="p">καὶ</span> <span class="p">ἀδικίῃ</span> <span class="w" data-n="n28">εἴρξειν.</span> <span class="w" data-n="n29">οὐ</span> <span class="w" data-n="n29">δώσω</span> <span class="p">δὲ</span> <span class="p">οὐδὲ</span></span></div></div></div>
+    <aside class="notes" data-alpheios-ignore="all"><h3>Commentary</h3><div class="sn" id="n16"><span class="snref">8</span><span class="snb"><b>διδάξειν</b> fut. inf. “to teach”</span></div><div class="sn" id="n17"><span class="snref">8</span><span class="snb"><b>ἢν χρηΐζωσι</b> pr. subj. in prot. of pr. gen. condition, “if they desire” + inf. (then I swear to teach)</span></div><div class="sn" id="n18"><span class="snref">9</span><span class="snb"><b>ἀκροήσιος ... μαθήσιος</b> gen. sing. with μετάδοσιν, “share of oral instruction ... of learning”</span></div><div class="sn" id="n19"><span class="snref">10</span><span class="snb"><b>ποιήσεσθαι</b> fut. inf. with ὄμνυμι, “to make a sharing”</span></div><div class="sn" id="n20"><span class="snref">10</span><span class="snb"><b>τοῖς (sc. υἱοῖς)</b> dat. ind. obj. “to the sons”</span></div><div class="sn" id="n21"><span class="snref">10</span><span class="snb"><b>τοῦ διδάξαντος</b> ao. part. gen. “(to the sons) of the one who taught”</span></div><div class="sn" id="n22"><span class="snref">11</span><span class="snb"><b>συγγεγραμμένοις</b> perf. part. dat. pl. “to those who have signed”</span></div><div class="sn" id="n23"><span class="snref">11</span><span class="snb"><b>ὡρκισμένοις</b> perf. part. dat. “to those who have sworn”</span></div><div class="sn" id="n24"><span class="snref">11</span><span class="snb"><b>ἄλλῳ δὲ οὐδενί</b> dat. ind. obj. “but to no other’</span></div><div class="sn" id="n26"><span class="snref">12</span><span class="snb"><b>διαιτήμασι</b> dat. pl. after χρήσομαι “I will use dietary regimes”</span></div><div class="sn" id="n25"><span class="snref">12</span><span class="snb"><b>ἐπ’ ὠφελείῃ</b> “for the benefit of” + gen.</span></div><div class="sn" id="n27"><span class="snref">13</span><span class="snb"><b>ἐπὶ δηλήσει</b> “as a check upon bane”</span></div><div class="sn" id="n28"><span class="snref">13</span><span class="snb"><b>εἴρξειν</b> fut. inf. after ὄμνυμι “to keep them safe”</span></div><div class="sn" id="n29"><span class="snref">13</span><span class="snb"><b>οὐ δώσω</b> fut. “I will not give”</span></div></aside>
+    <aside class="voc" data-alpheios-ignore="all"><h3>Vocabulary</h3><dl><div><dt>ἀδικίη, ἡ</dt><dd>wrongdoing, injustice</dd></div><div><dt>ἀκρόησις, -ιος, ἡ</dt><dd>a hearing, listening</dd></div><div><dt>ἄνευ</dt><dd>without (+ gen.)</dd></div><div><dt>δήλησις, -ιος, ἡ</dt><dd>ruin, bane</dd></div><div><dt>διαίτημα, -ατος, τό</dt><dd>a regimen, diet</dd></div><div><dt>διδάσκω</dt><dd>to teach X (acc.) to Y (acc.)</dd></div><div><dt>δίδωμι</dt><dd>to give</dd></div><div><dt>δύναμις, -ιος, ἡ</dt><dd>power, strength, ability</dd></div><div><dt>ἔργω</dt><dd>to keep safe, keep from</dd></div><div><dt>ἰητρικός, -ή, -όν</dt><dd>of a physician, medical</dd></div><div><dt>κάμνω</dt><dd>to be sick, suffer from illness</dd></div><div><dt>κρίσις, -ιος, ἡ</dt><dd>discernment, judgment</dd></div><div><dt>λοιπός, -ή, -όν</dt><dd>remaining, rest</dd></div><div><dt>μάθησις, -ιος, ἡ</dt><dd>a learning</dd></div><div><dt>μαθητής, -οῦ, ὁ</dt><dd>a learner, pupil</dd></div><div><dt>μανθάνω</dt><dd>to learn</dd></div><div><dt>μετάδοσις, -εως, ἡ</dt><dd>a giving, sharing</dd></div><div><dt>μισθός, ὁ</dt><dd>wages, pay, hire</dd></div><div><dt>νόμος, ὁ</dt><dd>a custom, law</dd></div><div><dt>ὁρκίζω</dt><dd>to bind by oath</dd></div><div><dt>παραγγελίη, ἡ</dt><dd>a command, order</dd></div><div><dt>ποιέω</dt><dd>to make, do</dd></div><div><dt>συγγραφή, ἡ</dt><dd>a written contract, bond</dd></div><div><dt>συγγράφω</dt><dd>to write down, sign a contract</dd></div><div><dt>τέχνη, ἡ</dt><dd>art, skill</dd></div><div><dt>υἱός, ὁ</dt><dd>a son</dd></div><div><dt>χρέομαι</dt><dd>to use</dd></div><div><dt>χρῄζω</dt><dd>to need, lack</dd></div><div><dt>ὠφελείη, ἡ</dt><dd>help, aid, benefit</dd></div></dl></aside>
+  </div>
+</article>
+<article class="pg" id="p3" data-page="3" hidden>
+  <div class="pgbody">
+    <div class="txt"><div class="lines"><div class="ln"><span class="num">14</span><span class="t"><span class="p">φάρμακον</span> <span class="p">οὐδενὶ</span> <span class="w" data-n="n30">αἰτηθεὶς</span> <span class="p">θανάσιμον,</span> <span class="p">οὐδὲ</span> <span class="p">ὑφηγήσομαι</span> <span class="p">συμβουλίην</span> <span class="p">τοιήνδε:</span></span></div><div class="ln"><span class="num">15</span><span class="t"><span class="p">ὁμοίως</span> <span class="p">δὲ</span> <span class="p">οὐδὲ</span> <span class="p">γυναικὶ</span> <span class="w" data-n="n31">πεσσὸν</span> <span class="w" data-n="n31">φθόριον</span> <span class="p">δώσω.</span></span></div><div class="ln"><span class="num">16</span><span class="t"><span class="p">ἁγνῶς</span> <span class="p">δὲ</span> <span class="p">καὶ</span> <span class="p">ὁσίως</span> <span class="w" data-n="n32">διατηρήσω</span> <span class="p">βίον</span> <span class="p">τὸν</span> <span class="p">ἐμὸν</span> <span class="p">καὶ</span> <span class="p">τέχνην</span> <span class="p">τὴν</span> <span class="p">ἐμήν.</span></span></div><div class="ln"><span class="num">17</span><span class="t"><span class="w" data-n="n33">οὐ</span> <span class="w" data-n="n33">τεμέω</span> <span class="p">δὲ</span> <span class="w" data-n="n34">οὐδὲ</span> <span class="w" data-n="n34">μὴν</span> <span class="w" data-n="n35">λιθιῶντας,</span> <span class="p">ἐκχωρήσω</span> <span class="p">δὲ</span> <span class="p">ἐργάτῃσιν</span> <span class="w" data-n="n36">ἀνδράσι</span></span></div><div class="ln"><span class="num">18</span><span class="t"><span class="w" data-n="n37">πρήξιος</span> <span class="p">τῆσδε.</span> <span class="p">ἐς</span> <span class="p">οἰκίας</span> <span class="p">δὲ</span> <span class="w" data-n="n38">ὁκόσας</span> <span class="w" data-n="n38">ἂν</span> <span class="w" data-n="n38">ἐσίω,</span></span></div><div class="ln"><span class="num">19</span><span class="t"><span class="w" data-n="n39">ἐσελεύσομαι</span> <span class="p">ἐπ᾽</span> <span class="p">ὠφελείῃ</span> <span class="w" data-n="n40">καμνόντων,</span> <span class="w" data-n="n41">ἐκτὸς</span> <span class="w" data-n="n41">ἐὼν</span> <span class="p">πάσης</span> <span class="p">ἀδικίης</span> <span class="p">ἑκουσίης</span> <span class="p">καὶ</span> <span class="p">φθορίης,</span></span></div><div class="ln"><span class="num">20</span><span class="t"><span class="p">τῆς</span> <span class="p">τε</span> <span class="p">ἄλλης</span> <span class="p">καὶ</span> <span class="w" data-n="n42">ἀφροδισίων</span> <span class="w" data-n="n42">ἔργων</span> <span class="p">ἐπί</span> <span class="p">τε</span> <span class="p">γυναικείων</span> <span class="p">σωμάτων</span></span></div><div class="ln"><span class="num">21</span><span class="t"><span class="p">καὶ</span> <span class="p">ἀνδρῴων,</span> <span class="p">ἐλευθέρων</span> <span class="p">τε</span> <span class="p">καὶ</span> <span class="p">δούλων.</span></span></div></div></div>
+    <aside class="notes" data-alpheios-ignore="all"><h3>Commentary</h3><div class="sn" id="n30"><span class="snref">14</span><span class="snb"><b>αἰτηθεὶς</b> ao. pas. part. concessive, “although having been asked”</span></div><div class="sn" id="n31"><span class="snref">15</span><span class="snb"><b>πεσσὸν φθόριον</b> a stone-shaped object inserted to prompt an abortion</span></div><div class="sn" id="n32"><span class="snref">16</span><span class="snb"><b>διατηρήσω</b> fut. “I will maintain”</span></div><div class="sn" id="n33"><span class="snref">17</span><span class="snb"><b>οὐ τεμέω</b> fut. of τέμνω “ I will not cut”</span></div><div class="sn" id="n34"><span class="snref">17</span><span class="snb"><b>οὐδὲ μὴν</b> “not even those”</span></div><div class="sn" id="n35"><span class="snref">17</span><span class="snb"><b>λιθιῶντας</b> pr. part. “those suffering from stones”</span></div><div class="sn" id="n36"><span class="snref">17</span><span class="snb"><b>ἀνδράσι</b> dat. of sep. after ἐκχωρήσω “I will yield to men”</span></div><div class="sn" id="n37"><span class="snref">18</span><span class="snb"><b>πρήξιος</b> gen. s. (= πράξεως) “the practioners of this practice”</span></div><div class="sn" id="n38"><span class="snref">18</span><span class="snb"><b>ὁκόσας ἂν ἐσίω</b> pr. subj. in gen. rel. cl. “into whatever homes I enter”</span></div><div class="sn" id="n39"><span class="snref">19</span><span class="snb"><b>ἐσελεύσομαι</b> fut. of ἐσ-έρχομαι, “I will enter”</span></div><div class="sn" id="n40"><span class="snref">19</span><span class="snb"><b>καμνόντων</b> pr. part. gen. “of those who are ill”</span></div><div class="sn" id="n41"><span class="snref">19</span><span class="snb"><b>ἐκτὸς ἐὼν</b> pr. part. “being outside of” + gen.</span></div><div class="sn" id="n42"><span class="snref">20</span><span class="snb"><b>ἀφροδισίων ἔργων</b> “of the works of Aphrodite” i.e. of sex</span></div></aside>
+    <aside class="voc" data-alpheios-ignore="all"><h3>Vocabulary</h3><dl><div><dt>ἁγνός, -ή, -όν</dt><dd>full of religious awe</dd></div><div><dt>ἀδικίη, ἡ</dt><dd>wrongdoing, injustice</dd></div><div><dt>αἰτέω</dt><dd>to ask, beg</dd></div><div><dt>ἀνδρῷος, -η, -ον</dt><dd>of men, male</dd></div><div><dt>ἀνήρ, ὁ</dt><dd>a man</dd></div><div><dt>ἀφροδίσιος, -η, -ον</dt><dd>belonging to Aphrodite</dd></div><div><dt>βίος, ὁ</dt><dd>life</dd></div><div><dt>γυναικεῖος, -η, -ον</dt><dd>of women, female</dd></div><div><dt>γυνή, ἡ</dt><dd>a woman</dd></div><div><dt>διατηρέω</dt><dd>to watch closely, observe, maintain</dd></div><div><dt>δίδωμι</dt><dd>to give</dd></div><div><dt>εἰσέρχομαι</dt><dd>to go in, enter</dd></div><div><dt>ἐκτός</dt><dd>outside</dd></div><div><dt>ἐκχωρέω</dt><dd>to depart, give way</dd></div><div><dt>ἐλεύθερος, -η, -ον</dt><dd>free</dd></div><div><dt>ἐργάτης, -ου, ὁ</dt><dd>a workman, practitioner</dd></div><div><dt>θανάσιμος, -ον</dt><dd>deadly, mortal</dd></div><div><dt>κάμνω</dt><dd>to be sick, suffer from illness</dd></div><div><dt>λιθιάω</dt><dd>to suffer from (kidney) stones</dd></div><div><dt>οἰκίη, ἡ</dt><dd>a home</dd></div><div><dt>ὅμοιος, -η, -ον</dt><dd>like, resembling</dd></div><div><dt>ὅσιος, -η, -ον</dt><dd>hallowed</dd></div><div><dt>πεσσός, ὁ</dt><dd>a pessary (for abortion)</dd></div><div><dt>πρῆξις, -ιος, ἡ</dt><dd>a doing, action</dd></div><div><dt>συμβουλίη, ἡ</dt><dd>advice, counsel</dd></div><div><dt>σῶμα, -ατος, τό</dt><dd>a body</dd></div><div><dt>τέμνω</dt><dd>to cut</dd></div><div><dt>τέχνη, ἡ</dt><dd>art, skill</dd></div><div><dt>ὑφηγέομαι</dt><dd>to guide</dd></div><div><dt>φάρμακον, τό</dt><dd>a drug, medicine</dd></div><div><dt>φθορίη, ἡ</dt><dd>corruption, mischief</dd></div><div><dt>φθόριος, -ον</dt><dd>destructive</dd></div><div><dt>ὠφέλεια, ἡ</dt><dd>help, aid, benefit</dd></div></dl></aside>
+  </div>
+</article>
+<article class="pg" id="p4" data-page="4" hidden>
+  <div class="pgbody">
+    <div class="txt"><div class="lines"><div class="ln"><span class="num">22</span><span class="t"><span class="w" data-n="n44">ἃ</span> <span class="w" data-n="n44">δ᾽</span> <span class="w" data-n="n44">ἂν</span> <span class="p">ἐν</span> <span class="p">θεραπείῃ</span> <span class="p">ἢ</span> <span class="w" data-n="n44">ἴδω</span> <span class="p">ἢ</span> <span class="w" data-n="n43">ἀκούσω,</span></span></div><div class="ln"><span class="num">23</span><span class="t"><span class="p">ἢ</span> <span class="w" data-n="n45">καὶ</span> <span class="w" data-n="n45">ἄνευ</span> <span class="p">θεραπείης</span> <span class="p">κατὰ</span> <span class="p">βίον</span> <span class="p">ἀνθρώπων,</span></span></div><div class="ln"><span class="num w" data-n="L46">24</span><span class="t"><span class="p">ἃ</span> <span class="p">μὴ</span> <span class="p">χρή</span> <span class="p">ποτε</span> <span class="p">ἐκλαλεῖσθαι</span> <span class="p">ἔξω,</span> <span class="p">σιγήσομαι,</span></span></div><div class="ln"><span class="num">25</span><span class="t"><span class="p">ἄρρητα</span> <span class="w" data-n="n47">ἡγεύμενος</span> <span class="p">εἶναι</span> <span class="p">τὰ</span> <span class="p">τοιαῦτα.</span> <span class="p">ὅρκον</span> <span class="p">μὲν</span> <span class="p">οὖν</span> <span class="p">μοι</span> <span class="p">τόνδε</span></span></div><div class="ln"><span class="num">26</span><span class="t"><span class="w" data-n="n48">ἐπιτελέα</span> <span class="w" data-n="n49">ποιέοντι,</span> <span class="p">καὶ</span> <span class="w" data-n="n52">μὴ</span> <span class="p">συγχέοντι,</span> <span class="w" data-n="n50">εἴη</span> <span class="w" data-n="n51">ἐπαύρασθαι</span></span></div><div class="ln"><span class="num">27</span><span class="t"><span class="p">καὶ</span> <span class="p">βίου</span> <span class="p">καὶ</span> <span class="p">τέχνης</span> <span class="w" data-n="n53">δοξαζομένῳ</span> <span class="p">παρὰ</span> <span class="p">πᾶσιν</span> <span class="p">ἀνθρώποις</span></span></div><div class="ln"><span class="num">28</span><span class="t"><span class="p">ἐς</span> <span class="p">τὸν</span> <span class="p">αἰεὶ</span> <span class="p">χρόνον:</span> <span class="w" data-n="n54">παραβαίνοντι</span> <span class="p">δὲ</span> <span class="p">καὶ</span> <span class="p">ἐπιορκέοντι,</span> <span class="w" data-n="n55">τἀναντία</span> <span class="p">τούτων.</span></span></div></div></div>
+    <aside class="notes" data-alpheios-ignore="all"><h3>Commentary</h3><div class="sn" id="n44"><span class="snref">22</span><span class="snb"><b>ἃ δ’ ἂν ἴδω</b> ao. subj. of εἶδον in gen. rel. cl. “whatever I see”</span></div><div class="sn" id="n43"><span class="snref">22</span><span class="snb"><b>ἀκούσω</b> ao. subj. “whatever I hear”</span></div><div class="sn" id="n45"><span class="snref">23</span><span class="snb"><b>καὶ ἄνευ</b> “even apart from” + gen.</span></div><div class="sn" id="L46"><span class="snref">24</span><span class="snb"><b>ἐκλαλέεσθαι</b> pr. inf. complementing χρή “what is not necessary to spread abroad”</span></div><div class="sn" id="n47"><span class="snref">25</span><span class="snb"><b>ἡγεύμενος</b> pr. part. (=ἡγούμενος) “considering such things” + inf.</span></div><div class="sn" id="n48"><span class="snref">26</span><span class="snb"><b>ἐπιτελέα</b> acc. pred. “making this oath fulfilled”</span></div><div class="sn" id="n49"><span class="snref">26</span><span class="snb"><b>ποιέοντι</b> pr. part. dat. “to me making”</span></div><div class="sn" id="n52"><span class="snref">26</span><span class="snb"><b>μὴ ξυγχέοντι</b> pr. part. dat. “and to me not breaking” μὴ indicates a conditional sense “if I do not break”</span></div><div class="sn" id="n50"><span class="snref">26</span><span class="snb"><b>εἴη</b> opt. wish for the future “may it be possible” + inf.</span></div><div class="sn" id="n51"><span class="snref">26</span><span class="snb"><b>ἐπαύρασθαι</b> ao. inf. “to share in” + gen.</span></div><div class="sn" id="n53"><span class="snref">27</span><span class="snb"><b>δοξαζομένῳ</b> pr. part. dat. also agreeing with μοι “being famous”</span></div><div class="sn" id="n54"><span class="snref">28</span><span class="snb"><b>παραβαίνοντι</b> pr. part. dat. “but (to me) deviating”</span></div><div class="sn" id="n55"><span class="snref">28</span><span class="snb"><b>τἀναντία (sc. εἴη)</b> “may the opposite things be”</span></div></aside>
+    <aside class="voc" data-alpheios-ignore="all"><h3>Vocabulary</h3><dl><div><dt>ἀκούω</dt><dd>to hear</dd></div><div><dt>ἄνθρωπος, ὁ</dt><dd>a man</dd></div><div><dt>ἄρρητος, -η, -ον</dt><dd>unspoken, unsaid</dd></div><div><dt>βίος, ὁ</dt><dd>life</dd></div><div><dt>δοξάζω</dt><dd>to think, suppose</dd></div><div><dt>δοῦλος, -η, -ον</dt><dd>enslaved</dd></div><div><dt>ἐκλαλέω</dt><dd>to speak out, divulge</dd></div><div><dt>ἐναντίος, -η, -ον</dt><dd>opposite</dd></div><div><dt>ἔξω</dt><dd>out</dd></div><div><dt>ἐπαυρέω</dt><dd>to partake of, share</dd></div><div><dt>ἐπιορκέω</dt><dd>to swear falsely</dd></div><div><dt>ἐπιτελής, -ές</dt><dd>completed, accomplished</dd></div><div><dt>ἡγέομαι</dt><dd>to go before, consider</dd></div><div><dt>θεραπείη, ἡ</dt><dd>a service, treatment</dd></div><div><dt>ὅρκος, ὁ</dt><dd>an oath</dd></div><div><dt>παραβαίνω</dt><dd>to go beside, transgress</dd></div><div><dt>ποιέω</dt><dd>to make, do</dd></div><div><dt>σιγάω</dt><dd>to keep silent</dd></div><div><dt>συγχέω</dt><dd>to confound, destroy</dd></div><div><dt>τέχνη, ἡ</dt><dd>art, skill</dd></div><div><dt>χρή</dt><dd>it is necessary</dd></div><div><dt>χρόνος, ὁ</dt><dd>time</dd></div></dl></aside>
+  </div>
+</article></div>
+  </div>
+</main>
+
+<button class="btn" id="unfocus" data-alpheios-ignore="all">⤢ Show bar</button>
+<div id="pop" data-alpheios-ignore="all"></div>
+
+<dialog id="allnotes" data-alpheios-ignore="all">
+  <h3>Notes on this page</h3>
+  <div id="allnotesBody"></div>
+  <button class="btn close" id="allClose">Close</button>
+</dialog>
+
+<nav class="pager" data-alpheios-ignore="all">
+  <button class="btn" id="prev">←</button>
+  <select id="jump"><option value="1">1 · ὄμνυμι Ἀπόλλωνα ἰητρὸν καὶ…</option><option value="2">2 · καὶ διδάξειν τὴν τέχνην…</option><option value="3">3 · φάρμακον οὐδενὶ αἰτηθεὶς θανάσιμον…</option><option value="4">4 · ἃ δ᾽ ἂν ἐν…</option></select>
+  <span class="of"><span id="cur">1</span> / 4</span>
+  <label class="span" title="Pages at once (+ / - to change)">
+    <span>pages</span>
+    <select id="span"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>10</option></select>
+  </label>
+  <button class="btn" id="next">→</button>
+</nav>
+
+<dialog id="core" data-alpheios-ignore="all">
+  <h3>Core vocabulary</h3>
+  <p class="sub">Words frequent enough that the commentary assumes them. Everything else is glossed beside its own page.</p>
+  <dl></dl>
+  <button class="btn close" id="coreClose" style="margin-top:16px;width:100%;border-color:var(--rule);background:transparent;color:var(--ink)">Close</button>
+</dialog>
+
+<dialog id="info" data-alpheios-ignore="all">
+  <h3>About this edition</h3>
+  <dl>
+    <dt>Text</dt><dd>Hippocrates, The Hippocratic Oath</dd>
+    <dt>Commentary</dt><dd>Evan Hayes and Stephen Nimis</dd>
+    <dt>Size</dt><dd>4 pages · 28 lines · 55 notes</dd>
+    <dt>Source</dt><dd><a href="https://www.researchgate.net/search/publication?q=Evan%20Hayes%20Stephen%20Nimis%20Hippocrates%20On%20Airs%20Waters%20Places" target="_blank" rel="noopener">publisher’s page</a></dd>
+    <dt>License</dt><dd>CC BY-NC-SA 3.0</dd>
+  </dl>
+  <h3 style="margin-top:18px">Known issues in this text</h3>
+  <p class="credit" style="margin-top:0">Text and commentary were digitised by OCR, anchored to individual words by a neural pass, then post-processed. These are the measured artefacts of that pipeline — the commentary itself is unaltered.</p>
+  <dl><dt>Notes</dt><dd>55</dd><dt>Anchored to a line, not a word</dt><dd>2 · 2.6% — the neural pass could not match the editor's citation form to a word in the text; these open from the line number</dd><dt>Phrases only partly anchored</dt><dd>1 — a multi-word phrase where not every word is underlined, usually one broken across a line</dd></dl>
+  <p class="credit">Greek text in the public domain. Vocabulary and commentary by Evan Hayes and Stephen Nimis, reused under CC BY-NC-SA 3.0; this reading edition is released under the same licence. Word analysis is provided by Alpheios. Not affiliated with or endorsed by the original editor.</p>
+  <button class="btn close" id="infoClose">Close</button>
+</dialog>
+
+<script>
+(function(){
+  var root=document.documentElement, LS=localStorage;
+  var pages=[].slice.call(document.querySelectorAll('.pg')), N=pages.length, cur=0;
+  var pop=document.getElementById('pop'), held=null;
+
+  ['theme','nums','marks','voc','notes','order','flow'].forEach(function(k){ var v=LS.getItem('k.'+k); if(v) root.dataset[k]=v; });
+  var fs=parseFloat(LS.getItem('k.fs')||'21');
+  function applyFs(){ root.style.setProperty('--fs', fs+'px'); }
+  function sync(){
+    document.getElementById('tNums').classList.toggle('on', root.dataset.nums==='on');
+    document.getElementById('tMarks').classList.toggle('on', root.dataset.marks==='on');
+    document.getElementById('tVoc').classList.toggle('on', root.dataset.voc==='on');
+    document.getElementById('tNotes').classList.toggle('on', root.dataset.notes==='on');
+    document.getElementById('tSwap').disabled = !(root.dataset.notes==='on' || root.dataset.voc==='on');
+    document.getElementById('tFlow').classList.toggle('on', root.dataset.flow==='on');
+  }
+  function toggle(k){ root.dataset[k]=root.dataset[k]==='on'?'off':'on'; LS.setItem('k.'+k,root.dataset[k]); sync(); }
+  applyFs(); sync();
+
+  // ── Гортання ───────────────────────────────────────────────────────────────
+  function closeNote(){
+    if(typeof unlit==='function') unlit();
+    pop.style.display='none';
+    if(held){ held.classList.remove('on'); held=null; }
+  }
+  // «Сторінок за раз» — ті самі значення, що в застосунку (READER_PAGE_SPAN_OPTIONS)
+  var SPANS=[1,2,3,4,5,10];
+  var span=parseInt(LS.getItem('k.span')||'1',10);
+  if(SPANS.indexOf(span)<0) span=1;
+  function applySpan(){
+    root.dataset.span = span>1 ? 'many' : 'one';
+    document.getElementById('span').value=String(span);
+    LS.setItem('k.span',span);
+  }
+
+  // Знімок вихідного складу кожної сторінки — щоб після злиття повернути все
+  // на місце точно в тому ж порядку.
+  var snap=pages.map(function(pg){
+    return {
+      lines:[].slice.call(pg.querySelectorAll('.lines > *')),
+      notes:[].slice.call(pg.querySelectorAll('.notes > *')),
+      voc:[].slice.call(pg.querySelectorAll('.voc dl > *'))
+    };
+  });
+  function restoreAll(){
+    pages.forEach(function(pg,i){
+      var L=pg.querySelector('.lines'), N=pg.querySelector('.notes'), V=pg.querySelector('.voc dl');
+      snap[i].lines.forEach(function(n){ L.appendChild(n); });
+      snap[i].notes.forEach(function(n){ N.appendChild(n); });
+      if(V) snap[i].voc.forEach(function(n){ V.appendChild(n); });
+      [].forEach.call(pg.querySelectorAll('.pbrk'),function(n){ n.remove(); });
+    });
+  }
+  function brk(label){ var d=document.createElement('div'); d.className='pbrk'; d.textContent=label; return d; }
+  // зливаємо сторінки cur..cur+span-1 у першу з них
+  function mergeInto(host,from,to){
+    var L=host.querySelector('.lines'), N=host.querySelector('.notes'), V=host.querySelector('.voc dl');
+    var seen={};
+    if(V) [].forEach.call(V.querySelectorAll('dt'),function(dt){ seen[dt.textContent]=1; });
+    for(var i=from+1;i<to;i++){
+      var pg=pages[i], label='page '+pg.dataset.page;
+      if(snap[i].lines.length){ L.appendChild(brk(label)); snap[i].lines.forEach(function(n){ L.appendChild(n); }); }
+      if(snap[i].notes.length){
+        // заголовок «Commentary» у кожної сторінки свій — другий і далі не потрібні
+        snap[i].notes.forEach(function(n){ if(n.tagName!=='H3') N.appendChild(n); });
+      }
+      if(V) snap[i].voc.forEach(function(n){
+        var dt=n.querySelector('dt');
+        if(dt && seen[dt.textContent]) return;      // слово вже є в розвороті
+        if(dt) seen[dt.textContent]=1;
+        V.appendChild(n);
+      });
+    }
+    if(V){
+      // один алфавітний список на весь розворот
+      var items=[].slice.call(V.children);
+      items.sort(function(a,b){
+        var x=(a.querySelector('dt')||{}).textContent||'', y=(b.querySelector('dt')||{}).textContent||'';
+        return x.localeCompare(y,'el');
+      });
+      items.forEach(function(n){ V.appendChild(n); });
+    }
+  }
+  function go(i,push){
+    i=Math.max(0,Math.min(N-1,i));
+    cur=i;
+    restoreAll();
+    var last=Math.min(N,cur+span);
+    for(var k=0;k<N;k++) pages[k].hidden = (k!==cur);   // видно завжди ОДНУ сторінку —
+    if(span>1) mergeInto(pages[cur],cur,last);          // решта вливається в неї
+    document.getElementById('cur').textContent = span>1 ? (cur+1)+"-"+last : String(cur+1);
+    document.getElementById('jump').value=String(cur+1);
+    document.getElementById('prev').disabled=cur===0;
+    document.getElementById('next').disabled=cur+span>=N;
+    closeNote();
+    document.querySelector('.sheet').scrollTop=0;
+    if(push!==false) history.replaceState(null,'','#p'+(cur+1));
+  }
+  document.getElementById('prev').onclick=function(){ go(cur-span); };
+  document.getElementById('next').onclick=function(){ go(cur+span); };
+  document.getElementById('span').onchange=function(){ span=parseInt(this.value,10)||1; applySpan(); go(cur); };
+  document.getElementById('jump').onchange=function(){ go(parseInt(this.value,10)-1); };
+  addEventListener('keydown',function(e){
+    if(e.target.tagName==='SELECT'||e.metaKey||e.ctrlKey||e.altKey) return;
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){ go(cur-span); e.preventDefault(); }
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){ go(cur+span); e.preventDefault(); }
+    // + / - міняють кількість сторінок, як у застосунку
+    if(e.key==='+'||e.key==='='){ span=SPANS[Math.min(SPANS.length-1,SPANS.indexOf(span)+1)]; applySpan(); go(cur); e.preventDefault(); }
+    if(e.key==='-'){ span=SPANS[Math.max(0,SPANS.indexOf(span)-1)]; applySpan(); go(cur); e.preventDefault(); }
+    if(e.key==='Escape'){
+      // Escape знімає по одному шару: попап → закріплена підсвітка → плашка
+      if(pop.style.display==='block') closeNote();
+      else if(pinned) unlit();
+      else if(root.dataset.focus==='on') setFocus(false);
+    }
+  });
+
+  // ── Коментар: ОДИНАРНИЙ клік по слову. Alpheios слухає подвійний, тож вони
+  //    не конфліктують. Попап стає біля слова — оку нікуди їхати, і внизу не
+  //    доводиться тримати постійну смугу. ──────────────────────────────────────
+  // Наведення — ТИМЧАСОВА підсвітка: гасне, щойно відвів. Клік — закріплює,
+  // поки не знімеш. Липка підсвітка на наведення дратує: прибрати її нічим.
+  var litSn=null, pinned=null;
+  function paint(sn){
+    if(litSn && litSn!==sn) litSn.classList.remove('lit');
+    litSn=sn || null;
+    if(sn) sn.classList.add('lit');
+  }
+  function unlit(){ pinned=null; paint(null); }
+  function hoverOff(){ paint(pinned); }        // повертаємось до закріпленої, якщо є
+  function litInColumn(nid, opts){
+    var sn=document.getElementById(nid);
+    if(!sn) return false;
+    if(opts && opts.pin) pinned=sn;
+    paint(sn);
+    // клік — свідома дія: тягнемо нотатку в центр колонки, бо стовпчик буває
+    // на сотні рядків. Наведення лишається делікатним, інакше колонка сіпається.
+    if(opts && opts.pin) sn.scrollIntoView({block:'center'});
+    else if(opts && opts.scroll) sn.scrollIntoView({block:'nearest'});
+    return true;
+  }
+  function openNote(w){
+    if(root.dataset.notes==='on'){
+      // повторний клік по тому самому слову — відкріпити
+      if(pinned && pinned.id===w.dataset.n) unlit();
+      else litInColumn(w.dataset.n,{scroll:true,pin:true});
+      return;
+    }
+    var src=document.getElementById(w.dataset.n);
+    if(!src) return;
+    if(held) held.classList.remove('on');
+    held=w; w.classList.add('on');
+    pop.innerHTML='<button class="x" aria-label="Close">×</button>'+(src.querySelector('.snb')||src).innerHTML;
+    pop.style.display='block';
+    pop.style.left='0px'; pop.style.top='0px';
+    var r=w.getBoundingClientRect(), b=pop.getBoundingClientRect();
+    var left=Math.min(Math.max(8, r.left-12), innerWidth-b.width-8);
+    // під словом, а якщо не влазить — над ним; саме слово не перекриваємо
+    var top = (r.bottom+10+b.height<=innerHeight) ? r.bottom+10 : Math.max(8, r.top-10-b.height);
+    pop.style.left=left+'px'; pop.style.top=top+'px';
+  }
+  document.addEventListener('mouseover',function(e){
+    if(root.dataset.notes!=='on') return;
+    var w=e.target.closest('.w');
+    if(w){ litInColumn(w.dataset.n,{scroll:true}); return; }
+    var sn=e.target.closest('.sn');
+    if(sn){ paint(sn); return; }
+    hoverOff();                     // пішли геть від слова й від нотатки — гасимо
+  });
+  document.addEventListener('mouseleave',function(){ hoverOff(); });
+
+  document.addEventListener('click',function(e){
+    if(e.target.closest('#pop .x')){ closeNote(); return; }
+    if(e.target.closest('#pop')) return;
+    var w=e.target.closest('.w');
+    if(w){ if(w===held) closeNote(); else openNote(w); return; }
+    closeNote();
+  });
+  // подвійний клік — це Alpheios; свій попап прибираємо, щоб не заважав
+  document.addEventListener('dblclick',function(){ closeNote(); });
+
+  var allDlg=document.getElementById('allnotes');
+  document.getElementById('tAll').onclick=function(){
+    var col=pages[cur].querySelectorAll('.notes .sn');
+    document.getElementById('allnotesBody').innerHTML =
+      [].map.call(col,function(d){ return '<div class="body">'+d.querySelector('.snb').innerHTML+'</div>'; }).join('')
+      || '<p style="color:var(--muted)">No notes on this page.</p>';
+    if(allDlg.showModal) allDlg.showModal(); else allDlg.setAttribute('open','');
+  };
+  document.getElementById('allClose').onclick=function(){ if(allDlg.close) allDlg.close(); else allDlg.removeAttribute('open'); };
+  document.getElementById('tVoc').onclick=function(){ toggle('voc'); };
+  document.getElementById('tNotes').onclick=function(){ toggle('notes'); closeNote(); };
+  // усі шість перестановок трьох колонок; недоступні панелі просто не показуються
+  var ORDERS=['tnv','tvn','ntv','vtn','nvt','vnt'];
+  var ORDER_LABEL={tnv:'Text · Commentary · Vocab',tvn:'Text · Vocab · Commentary',
+                   ntv:'Commentary · Text · Vocab',vtn:'Vocab · Text · Commentary',
+                   nvt:'Commentary · Vocab · Text',vnt:'Vocab · Commentary · Text'};
+  function applyOrder(){
+    var o=root.dataset.order||'tnv';
+    document.getElementById('tSwap').title='Column order: '+(ORDER_LABEL[o]||o)+' — click to cycle';
+  }
+  document.getElementById('tSwap').onclick=function(){
+    var i=ORDERS.indexOf(root.dataset.order||'tnv');
+    root.dataset.order=ORDERS[(i+1)%ORDERS.length];
+    LS.setItem('k.order', root.dataset.order); applyOrder();
+  };
+  applyOrder();
+  document.getElementById('tFlow').onclick=function(){ toggle('flow'); };
+  function setFocus(on){ root.dataset.focus = on?'on':'off'; }
+  document.getElementById('tFocus').onclick  = function(){ setFocus(true); };
+  document.getElementById('unfocus').onclick = function(){ setFocus(false); };
+
+  document.getElementById('tPlus').onclick =function(){ fs=Math.min(30,fs+1); LS.setItem('k.fs',fs); applyFs(); };
+  document.getElementById('tMinus').onclick=function(){ fs=Math.max(15,fs-1); LS.setItem('k.fs',fs); applyFs(); };
+  document.getElementById('tNums').onclick =function(){ toggle('nums'); };
+  document.getElementById('tMarks').onclick=function(){ toggle('marks'); };
+  document.getElementById('tTheme').onclick=function(){
+    var o=['sepia','light','dark'], i=o.indexOf(root.dataset.theme);
+    root.dataset.theme=o[(i+1)%o.length]; LS.setItem('k.theme',root.dataset.theme);
+  };
+
+  // ── Alpheios: єдиний аналізатор форм. Наведення — наше, клік — його. ────────
+  var alphState='off', alphBtn=document.getElementById('tAlph');
+  function alphLabel(){ alphBtn.textContent = alphState==='loading'?'α …':'α'; alphBtn.classList.toggle('on', alphState==='on'); }
+  function loadAlpheios(){
+    if(alphState!=='off') return;
+    alphState='loading'; alphLabel();
+    var css=document.createElement('link'); css.rel='stylesheet';
+    css.href='https://cdn.jsdelivr.net/npm/alpheios-components@latest/dist/style/style-components.min.css';
+    document.head.appendChild(css);
+    import('https://cdn.jsdelivr.net/npm/alpheios-embedded@latest/dist/alpheios-embedded.min.js').then(function(){
+      return window.AlpheiosEmbed.importDependencies({mode:'cdn'});
+    }).then(function(E){
+      new E({clientId:'exocortex-greek-commentaries', textLangCode:'grc'}).activate();
+      alphState='on'; alphLabel(); LS.setItem('k.alph','on');
+    }).catch(function(err){ console.error(err); alphState='off'; alphLabel(); LS.removeItem('k.alph'); });
+  }
+  alphBtn.onclick=function(){ if(alphState==='on'){ LS.removeItem('k.alph'); location.reload(); return; } loadAlpheios(); };
+  if(LS.getItem('k.alph')==='on') loadAlpheios();
+  alphLabel();
+
+  function dlg(id,openBtn,closeBtn){
+    var d=document.getElementById(id);
+    document.getElementById(openBtn).onclick=function(){ if(d.showModal) d.showModal(); else d.setAttribute('open',''); };
+    document.getElementById(closeBtn).onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
+  }
+  dlg('info','tInfo','infoClose'); dlg('core','tCore','coreClose');
+
+  var m=location.hash.match(/^#p(\d+)$/);
+  applySpan();
+  go(m?parseInt(m[1],10)-1:0,false);
+})();
+</script>
+</body>
+</html>

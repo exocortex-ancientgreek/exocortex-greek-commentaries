@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Exocortex — Ancient Greek commented editions</title>
+<meta name="description" content="Commented Ancient Greek editions as a reading interface: hover-free commentary on click, running vocabulary, Alpheios for morphology.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gentium+Plus:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2efe4;--paper:#fffdf6;--ink:#1d1c18;--muted:#7a7566;--rule:#e6e0cc;--accent:#6b5a2e;--head:#2f3b2f;--headink:#f1ecda}
+@media(prefers-color-scheme:dark){:root{--bg:#101216;--paper:#1b1e24;--ink:#e6e3da;--muted:#9aa0aa;--rule:#2c313a;--accent:#c8ab6a;--head:#0f1114;--headink:#e6e3da}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.6}
+header{background:var(--head);color:var(--headink);padding:34px 20px}
+header .w{max-width:1080px;margin:0 auto}
+header h1{margin:0;font-size:26px;letter-spacing:.01em}
+header p{margin:8px 0 0;opacity:.8;max-width:60ch;font-size:15px}
+header .stats{margin-top:14px;font-size:13px;opacity:.65}
+main{max-width:1080px;margin:0 auto;padding:26px 20px 60px}
+.lede{background:var(--paper);border:1px solid var(--rule);border-radius:12px;padding:18px 22px;margin:0 0 30px;font-size:15px}
+.lede p{margin:0 0 10px} .lede p:last-child{margin:0}
+.lede a{color:var(--accent)}
+.pub{margin:0 0 34px}
+.pub h2{font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 4px}
+.plinks{margin:0 0 14px;font-size:13.5px;color:var(--muted)}
+.plinks a{color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:flex;flex-direction:column;gap:3px;background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:13px 15px;text-decoration:none;color:inherit}
+.card:hover{border-color:var(--accent)}
+.ct{font-family:"Gentium Plus",Georgia,serif;font-size:17px;line-height:1.25}
+.ca{font-size:12.5px;color:var(--muted)}
+.cs{font-size:11.5px;color:var(--muted);opacity:.75;margin-top:3px;font-variant-numeric:tabular-nums}
+footer{max-width:1080px;margin:0 auto;padding:0 20px 60px;color:var(--muted);font-size:13.5px}
+footer a{color:var(--accent)} footer h3{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:26px 0 8px}
+</style></head>
+<body>
+<header><div class="w">
+  <h1>Exocortex — Ancient Greek commented editions</h1>
+  <p>Commented editions of Greek texts — the running vocabulary and commentary of their editors, turned into something you can actually read on a screen.</p>
+  <p class="stats">52 editions · 61,318 lines · 95,193 notes</p>
+</div></header>
+<main>
+  <div class="lede">
+    <p><b>The text and the commentary are not mine.</b> They were written by the editors below and published
+    free under CC BY-NC-SA. All I did was turn a printed page into a reading interface: click a word to see
+    its note, keep the page's vocabulary beside the text, and hand word analysis to Alpheios.</p>
+    <p>If you find these useful, <b>go to the editors first</b> — buy the print edition or send them something.
+    Their links are next to each group.</p>
+  </div>
+  <section class="pub">
+  <h2>Geoffrey Steadman</h2>
+  <p class="plinks"><a href="https://geoffreysteadman.com/" target="_blank" rel="noopener">site</a> · <a href="https://www.amazon.com/Geoffrey-Steadman/e/B00BXINVYU/" target="_blank" rel="noopener">books in print</a> · <a href="https://donate.stripe.com/aEU4j14sIchrewEeUU" target="_blank" rel="noopener"><b>support the author</b></a></p>
+  <div class="grid">
+    <a class="card" href="texts/aristotle-nicomachean-1/index.html">
+      <span class="ct">Aristotle, Nicomachean Ethics Book I</span>
+      <span class="ca">Aristotle</span>
+      <span class="cs">19 pages · 608 lines · 1,323 notes</span>
+    </a>
+    <a class="card" href="texts/aristotle-nicomachean-2-3/index.html">
+      <span class="ct">Aristotle, Nicomachean Ethics Books II-III</span>
+      <span class="ca">Aristotle</span>
+      <span class="cs">34 pages · 1,126 lines · 2,361 notes</span>
+    </a>
+    <a class="card" href="texts/cebes-tablet/index.html">
+      <span class="ct">Cebes' Tablet</span>
+      <span class="ca">Cebes</span>
+      <span class="cs">27 pages · 755 lines · 571 notes</span>
+    </a>
+    <a class="card" href="texts/euripides-bacchae/index.html">
+      <span class="ct">Euripides' Bacchae</span>
+      <span class="ca">Euripides</span>
+      <span class="cs">93 pages · 1,420 lines · 1,925 notes</span>
+    </a>
+    <a class="card" href="texts/euripides-medea/index.html">
+      <span class="ct">Euripides' Medea</span>
+      <span class="ca">Euripides</span>
+      <span class="cs">95 pages · 1,407 lines · 1,891 notes</span>
+    </a>
+    <a class="card" href="texts/genesis-1-11/index.html">
+      <span class="ct">Genesis 1-11</span>
+      <span class="ca">Genesis</span>
+      <span class="cs">53 pages · 302 lines · 1,040 notes</span>
+    </a>
+    <a class="card" href="texts/herodotus-1/index.html">
+      <span class="ct">Herodotus' Histories Book 1</span>
+      <span class="ca">Herodotus</span>
+      <span class="cs">237 pages · 3,332 lines · 4,145 notes</span>
+    </a>
+    <a class="card" href="texts/herodotus-7/index.html">
+      <span class="ct">Herodotus' Histories Book 7</span>
+      <span class="ca">Herodotus</span>
+      <span class="cs">117 pages · 3,178 lines · 4,139 notes</span>
+    </a>
+    <a class="card" href="texts/iliad-6-22/index.html">
+      <span class="ct">Homer, Iliad 6 and 22</span>
+      <span class="ca">Homer</span>
+      <span class="cs">105 pages · 1,044 lines · 2,239 notes</span>
+    </a>
+    <a class="card" href="texts/odyssey-17-20/index.html">
+      <span class="ct">Homer, Odyssey 17-20</span>
+      <span class="ca">Homer</span>
+      <span class="cs">205 pages · 2,032 lines · 4,481 notes</span>
+    </a>
+    <a class="card" href="texts/odyssey-9-12/index.html">
+      <span class="ct">Homer, Odyssey 9-12</span>
+      <span class="ca">Homer</span>
+      <span class="cs">223 pages · 2,233 lines · 4,966 notes</span>
+    </a>
+    <a class="card" href="texts/odyssey-5/index.html">
+      <span class="ct">Homer, Odyssey Book 5</span>
+      <span class="ca">Homer</span>
+      <span class="cs">50 pages · 493 lines · 1,186 notes</span>
+    </a>
+    <a class="card" href="texts/odyssey-6-8/index.html">
+      <span class="ct">Homer's Odyssey 6-8</span>
+      <span class="ca">Homer</span>
+      <span class="cs">65 pages · 1,264 lines · 1,696 notes</span>
+    </a>
+    <a class="card" href="texts/lysias-1/index.html">
+      <span class="ct">Lysias I</span>
+      <span class="ca">Lysias</span>
+      <span class="cs">30 pages · 264 lines · 533 notes</span>
+    </a>
+    <a class="card" href="texts/plato-apology/index.html">
+      <span class="ct">Plato, Apology</span>
+      <span class="ca">Plato</span>
+      <span class="cs">26 pages · 989 lines · 2,411 notes</span>
+    </a>
+    <a class="card" href="texts/plato-phaedo/index.html">
+      <span class="ct">Plato, Phaedo</span>
+      <span class="ca">Plato</span>
+      <span class="cs">62 pages · 2,703 lines · 4,594 notes</span>
+    </a>
+    <a class="card" href="texts/plato-symposium/index.html">
+      <span class="ct">Plato, Symposium</span>
+      <span class="ca">Plato</span>
+      <span class="cs">52 pages · 2,020 lines · 2,394 notes</span>
+    </a>
+    <a class="card" href="texts/plato-crito/index.html">
+      <span class="ct">Plato’s Crito</span>
+      <span class="ca">Plato</span>
+      <span class="cs">51 pages · 502 lines · 1,024 notes</span>
+    </a>
+    <a class="card" href="texts/plato-meno/index.html">
+      <span class="ct">Plato's Meno</span>
+      <span class="ca">Plato</span>
+      <span class="cs">93 pages · 1,295 lines · 2,225 notes</span>
+    </a>
+    <a class="card" href="texts/plato-republic-1/index.html">
+      <span class="ct">Plato's Republic I</span>
+      <span class="ca">Plato</span>
+      <span class="cs">44 pages · 1,277 lines · 1,699 notes</span>
+    </a>
+    <a class="card" href="texts/sophocles-ajax/index.html">
+      <span class="ct">Sophocles' Ajax</span>
+      <span class="ca">Sophocles</span>
+      <span class="cs">95 pages · 1,374 lines · 2,091 notes</span>
+    </a>
+    <a class="card" href="texts/sophocles-antigone/index.html">
+      <span class="ct">Sophocles' Antigone</span>
+      <span class="ca">Sophocles</span>
+      <span class="cs">90 pages · 1,328 lines · 1,757 notes</span>
+    </a>
+    <a class="card" href="texts/sophocles-oedipus/index.html">
+      <span class="ct">Sophocles' Oedipus Tyrannus</span>
+      <span class="ca">Sophocles</span>
+      <span class="cs">104 pages · 1,533 lines · 2,043 notes</span>
+    </a>
+    <a class="card" href="texts/thucydides-6/index.html">
+      <span class="ct">Thucydides, Peloponnesian War Book 6</span>
+      <span class="ca">Thucydides</span>
+      <span class="cs">209 pages · 2,148 lines · 4,996 notes</span>
+    </a>
+    <a class="card" href="texts/xenophon-anabasis-3/index.html">
+      <span class="ct">Xenophon, Anabasis III</span>
+      <span class="ca">Xenophon</span>
+      <span class="cs">88 pages · 796 lines · 1,876 notes</span>
+    </a>
+    <a class="card" href="texts/xenophon-anabasis-4/index.html">
+      <span class="ct">Xenophon, Anabasis IV</span>
+      <span class="ca">Xenophon</span>
+      <span class="cs">109 pages · 958 lines · 2,201 notes</span>
+    </a>
+    <a class="card" href="texts/xenophon-anabasis-1/index.html">
+      <span class="ct">Xenophon's Anabasis I</span>
+      <span class="ca">Xenophon</span>
+      <span class="cs">119 pages · 1,067 lines · 2,614 notes</span>
+    </a>
+  </div>
+</section>
+<section class="pub">
+  <h2>Evan Hayes and Stephen Nimis</h2>
+  <p class="plinks"><a href="https://www.amazon.com/stores/Stephen-A.-Nimis/author/B001KDF3TO" target="_blank" rel="noopener">books in print</a> · <a href="https://www.researchgate.net/profile/Stephen-Nimis-2" target="_blank" rel="noopener">ResearchGate</a></p>
+  <div class="grid">
+    <a class="card" href="texts/aelius-aristides-prose-hymns/index.html">
+      <span class="ct">Aelius Aristides, Five Prose Hymns</span>
+      <span class="ca">Aelius Aristides</span>
+      <span class="cs">137 pages · 1,106 lines · 1,477 notes</span>
+    </a>
+    <a class="card" href="texts/apollonius-argonautica-1/index.html">
+      <span class="ct">Apollonius Rhodius, Argonautica Book 1</span>
+      <span class="ca">Apollonius</span>
+      <span class="cs">174 pages · 1,362 lines · 1,910 notes</span>
+    </a>
+    <a class="card" href="texts/apollonius-argonautica-2/index.html">
+      <span class="ct">Apollonius Rhodius, Argonautica Book 2</span>
+      <span class="ca">Apollonius</span>
+      <span class="cs">158 pages · 1,287 lines · 1,861 notes</span>
+    </a>
+    <a class="card" href="texts/galen-three-treatises/index.html">
+      <span class="ct">Galen, Three Treatises</span>
+      <span class="ca">Galen</span>
+      <span class="cs">123 pages · 1,139 lines · 1,509 notes</span>
+    </a>
+    <a class="card" href="texts/hippocrates-airs-waters-places/index.html">
+      <span class="ct">Hippocrates, On Airs, Waters, and Places</span>
+      <span class="ca">Hippocrates</span>
+      <span class="cs">91 pages · 944 lines · 828 notes</span>
+    </a>
+    <a class="card" href="texts/hippocratic-oath/index.html">
+      <span class="ct">Hippocrates, The Hippocratic Oath</span>
+      <span class="ca">Hippocrates</span>
+      <span class="cs">4 pages · 28 lines · 55 notes</span>
+    </a>
+    <a class="card" href="texts/gospel-of-john/index.html">
+      <span class="ct">The Gospel of John</span>
+      <span class="ca">John</span>
+      <span class="cs">157 pages · 890 lines · 1,578 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-assembly-of-the-gods/index.html">
+      <span class="ct">Lucian, Assembly of the Gods</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">30 pages · 235 lines · 304 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-prolaliai/index.html">
+      <span class="ct">Lucian, Prolaliai</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">41 pages · 314 lines · 482 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-sale-of-lives/index.html">
+      <span class="ct">Lucian, Sale of Lives and The Dead Come to Life</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">144 pages · 1,365 lines · 1,638 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-lover-of-lies/index.html">
+      <span class="ct">Lucian, The Lover of Lies and Slander</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">125 pages · 1,117 lines · 1,343 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-rooster-prometheus/index.html">
+      <span class="ct">Lucian, The Rooster &amp; Prometheus</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">113 pages · 1,005 lines · 1,169 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-zeus-the-tragedian/index.html">
+      <span class="ct">Lucian, Zeus the Tragedian</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">101 pages · 758 lines · 1,015 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-a-true-story/index.html">
+      <span class="ct">Lucian's A True Story</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">146 pages · 1,362 lines · 1,725 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-dialogues-courtesans/index.html">
+      <span class="ct">Lucian's Dialogues of the Courtesans</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">118 pages · 1,069 lines · 1,239 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-dialogues-dead/index.html">
+      <span class="ct">Lucian's Dialogues of the Dead</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">185 pages · 1,601 lines · 1,789 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-dialogues-gods/index.html">
+      <span class="ct">Lucian's Dialogues of the Gods</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">121 pages · 1,019 lines · 1,206 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-dialogues-sea-gods/index.html">
+      <span class="ct">Lucian's Dialogues of the Sea Gods</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">74 pages · 547 lines · 803 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-judgment-goddesses/index.html">
+      <span class="ct">Lucian's Judgment of the Goddesses</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">30 pages · 259 lines · 262 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-syrian-goddess/index.html">
+      <span class="ct">Lucian's On the Syrian Goddess</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">83 pages · 725 lines · 936 notes</span>
+    </a>
+    <a class="card" href="texts/lucian-the-ass/index.html">
+      <span class="ct">Lucian's The Ass</span>
+      <span class="ca">Lucian</span>
+      <span class="cs">143 pages · 969 lines · 1,643 notes</span>
+    </a>
+    <a class="card" href="texts/menander-dyskolos/index.html">
+      <span class="ct">Menander, Dyskolos</span>
+      <span class="ca">Menader</span>
+      <span class="cs">116 pages · 988 lines · 1,327 notes</span>
+    </a>
+    <a class="card" href="texts/plutarch-dialogue-on-love/index.html">
+      <span class="ct">Plutarch, Dialogue on Love</span>
+      <span class="ca">Plutarch</span>
+      <span class="cs">184 pages · 1,490 lines · 2,224 notes</span>
+    </a>
+    <a class="card" href="texts/plutarch-isis-and-osiris/index.html">
+      <span class="ct">Plutarch, On Isis and Osiris</span>
+      <span class="ca">Plutarch</span>
+      <span class="cs">217 pages · 2,021 lines · 2,047 notes</span>
+    </a>
+  </div>
+</section>
+<section class="pub">
+  <h2>Quillful's Ventures</h2>
+  <p class="plinks"><a href="https://quillful.blogspot.com/p/commentaries.html" target="_blank" rel="noopener">site</a> · <a href="https://www.amazon.com/dp/B0BRZXT2KX" target="_blank" rel="noopener">books in print</a></p>
+  <div class="grid">
+    <a class="card" href="texts/batrachomyomachia/index.html">
+      <span class="ct">Batrachomyomachia</span>
+      <span class="ca">pseudo-Homer</span>
+      <span class="cs">18 pages · 270 lines · 402 notes</span>
+    </a>
+  </div>
+</section>
+</main>
+<footer>
+  <h3>How to read</h3>
+  <p>Click an underlined word for its commentary · double-click any word for Alpheios (dictionary and morphology) ·
+  ← → turn the page · <i>Commentary</i> and <i>Vocabulary</i> put those columns beside the text · ⇄ reorders them.</p>
+  <h3>Related</h3>
+  <p><a href="https://www.amazon.com/stores/C.-T.-Hadavas/author/B00MDG04GE" target="_blank" rel="noopener">C. T. Hadavas</a> — the same format, a very wide choice of authors<br><a href="https://patristicreaders.com/gregory-of-nyssa/" target="_blank" rel="noopener">Patristic Readers</a> — the same format, for the Church Fathers<br><a href="https://dcc.dickinson.edu/" target="_blank" rel="noopener">Dickinson College Commentaries</a> — online commentaries</p>
+  <h3>Licence</h3>
+  <p>Text and commentary: CC BY-NC-SA 3.0, by their respective editors. This reading edition is released under
+  the same licence. Not affiliated with or endorsed by any of the editors.</p>
+  <p><a href="https://github.com/exocortex-ancientgreek/exocortex-greek-commentaries">GitHub</a> · <a href="https://t.me/exocortex_ancientgreek">Telegram</a> · <a href="https://www.youtube.com/@exocortex_ancientlanguages">YouTube</a></p>
+</footer>
+</body></html>
