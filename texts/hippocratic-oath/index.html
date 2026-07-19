@@ -141,10 +141,11 @@ dialog#core{border:1px solid var(--rule);border-radius:12px;background:var(--pap
 dialog#core::backdrop{background:#0007}
 dialog#core h3{margin:0 0 6px;font-size:14px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent)}
 dialog#core p.sub{margin:0 0 14px;font-size:13px;color:var(--muted);font-style:italic}
-dialog#core dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:3px 30px;margin:0;font-size:13.5px}
-dialog#core dl div{display:grid;grid-template-columns:auto 1fr;gap:0 10px}
-dialog#core dt{font-family:"Gentium Plus",Georgia,serif;white-space:nowrap}
-dialog#core dd{margin:0;color:var(--muted)}
+dialog#core dl{columns:2;column-gap:34px;margin:0;font-size:13.4px;line-height:1.5}
+dialog#core dl div{break-inside:avoid;margin:0 0 5px}
+dialog#core dt{display:inline;font-family:"Gentium Plus",Georgia,serif;font-size:14.6px}
+dialog#core dd{display:inline;margin:0;color:var(--muted);font-size:12.8px}
+@media(max-width:640px){ dialog#core dl{columns:1} }
 dialog#core i{opacity:.5;font-style:normal;font-size:11px}
 dialog#allnotes{border:1px solid var(--rule);border-radius:12px;background:var(--paper);color:var(--ink);max-width:680px;width:calc(100% - 32px);max-height:78vh;padding:22px 24px}
 dialog#allnotes::backdrop{background:#0007}
