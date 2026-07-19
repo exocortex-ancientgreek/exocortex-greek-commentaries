@@ -97,7 +97,8 @@ first — buy a print copy or send them something. That matters more than anythi
 
 ### Quillful's Ventures
 
-[site](https://quillful.blogspot.com/p/commentaries.html) · [books in print](https://www.amazon.com/dp/B0BRZXT2KX)
+[site](https://quillful.blogspot.com/p/commentaries.html) · [books in print](https://www.amazon.com/dp/B0BRZXT2KX) · [David F. Driscoll — commentaries](https://davidfdriscoll.blogspot.com/) · [Weekday Greek — reading notes](https://weekdaygreek.blogspot.com/)
+> The Batrachomyomachia is by David F. Driscoll and Bayla Kamens.
 
 | Text | Author | Pages | Lines | Notes | Source |
 |---|---|--:|--:|--:|---|
