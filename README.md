@@ -117,6 +117,28 @@ of the editors. Per-text numbers are in *About this edition* on every page.
 | **Missing chapter and dialogue headings** | done for the 10 editions that collect several works under one cover (102 titles, taken from the printed tables of contents and title pages). Editions containing a single work carry no heading, since the title is already at the top of the page. |
 | The editor's **own** slips | occasionally a note cites a line number that is off by one or two. We do not correct these, and **we cannot detect them** — the anchoring is internally consistent either way. |
 
+## A warning about the line numbers
+
+**Do not cite anything by the numbers you see here.** They are there to help you find your
+place on the page and to tie a note to the line it belongs to. They are not a reference system,
+and they do not mean the same thing from one edition to the next.
+
+Three different things wear the same clothes:
+
+- **A real reference.** Plato carries Stephanus numbers (`17a1`), Aristotle the Bekker column,
+  Genesis chapter and verse, and the verse texts — Homer, Apollonius, the tragedians, Menander —
+  carry the line numbers of the poem itself. These you can trust and cite.
+- **The printed book's own numbering**, which restarts on every page. Steadman's prose editions
+  work this way — Herodotus I, Thucydides, Xenophon. The number matches the paper book but means
+  nothing without the page it sits on.
+- **A running count we assigned while digitising**, from 1 to the end of the edition. Most of the
+  Hayes & Nimis prose is like this — Lucian, Galen, Aelius Aristides, Plutarch. These numbers are
+  ours. They are not in the printed book, they are not canonical, and line 400 of one edition has
+  nothing to do with line 400 of another.
+
+Where a canonical reference exists for a text, use that and not what is printed in our margin.
+Within a page the numbers are consistent with the commentary, which is what they are for.
+
 ## Still being worked on
 
 - **Core vocabulary.** Mostly settled. The Crito's list was down to 11 words and has
