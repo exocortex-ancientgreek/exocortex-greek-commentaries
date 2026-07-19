@@ -114,20 +114,26 @@ of the editors. Per-text numbers are in *About this edition* on every page.
 | Notes anchored to a **line** instead of a word | 2,052 (2.2%) — the neural pass could not match the editor's citation form to a word in the text (`ἀπεφήα(σ)ο` for `ἀπεφήναο`). They still open, from the line number. |
 | Multi-word phrases where **not every word** is underlined | 2,215 left, out of 9,509 — the rest were repaired automatically at build time |
 | Leftover **beta-code** in a note | 2 editions (Plato's *Symposium*, Herodotus VII), flagged on their own pages |
-| **Missing chapter and dialogue headings** | some editions have no section titles yet; being added by hand |
+| **Missing chapter and dialogue headings** | done for the 10 editions that collect several works under one cover (102 titles, taken from the printed tables of contents and title pages). Editions containing a single work carry no heading, since the title is already at the top of the page. |
 | The editor's **own** slips | occasionally a note cites a line number that is off by one or two. We do not correct these, and **we cannot detect them** — the anchoring is internally consistent either way. |
 
 ## Still being worked on
 
-- **Core vocabulary.** Some editions carry a much shorter core list than the print
-  does — the Crito has 11 words where its book prints about a hundred, and Cebes'
-  Tablet 42. Those lists are being read back from the editors' PDFs. Note that a
-  missing core list is not always a fault: several Hayes & Nimis editions, such as
-  Plutarch's *Dialogue on Love*, gloss every word on its own page and never print a
-  separate core list at all.
-- **Section and dialogue titles.** Most editions have no headings yet, so a page
-  gives you the text but not where you are in the work. The titles exist in the
-  printed pages and are being added by hand, edition by edition.
+- **Core vocabulary.** Mostly settled. The Crito's list was down to 11 words and has
+  been read back from the print — 73, complete. Lysias I and Cebes' Tablet were
+  checked against their printed pages entry by entry and were already right, at 50
+  and 42.
+
+  A short list is not a fault by itself: the threshold is the editor's and it varies,
+  so Cebes' Tablet prints only what occurs *twenty or more* times, while Lysias and
+  the Crito use ten. Several Hayes & Nimis editions, such as Plutarch's *Dialogue on
+  Love*, gloss every word on its own page and print no core list at all. The
+  remaining editions have not been checked against their print one by one.
+- **Section titles inside a single work.** The 10 editions that gather several
+  works under one cover now name each one — Lucian's dialogues, Galen's three
+  treatises, Aelius Aristides' five hymns. What is still missing is the finer
+  division *within* a long single work, where the printed book marks scenes or
+  chapters; those headings are not in our data yet.
 - **Speaker names.** Done for the drama and the dialogues that had them, and read
   from the print for Cebes' Tablet; a few editions may still be missing turns.
 
