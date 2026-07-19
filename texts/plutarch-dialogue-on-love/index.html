@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="sepia" data-nums="on" data-marks="on" data-voc="on" data-corevoc="on" data-notes="off" data-order="tnv" data-flow="off" data-focus="off" data-span="one">
+<html lang="en" data-theme="sepia" data-nums="on" data-marks="on" data-voc="on" data-notes="off" data-order="tnv" data-flow="off" data-focus="off" data-span="one">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -108,7 +108,6 @@ html[data-marks="on"] .w{border-bottom:1px dotted var(--underline)}
 .voc dd{display:inline;margin:0 0 0 .35em;color:var(--muted);font-size:12.6px}
 /* core-слова показуються нарівні з рештою — окремої мітки й приглушення нема,
    клас лишається лише щоб перемикач міг їх сховати */
-html[data-corevoc="off"] .voc div.core{display:none}
 
 /* Коментар — попап біля слова: ніякого руху очей, і не з'їдає постійне місце
    внизу. Стійкий саме тому, що відкривається кліком, а не наведенням. */
@@ -139,6 +138,9 @@ dialog#info h3{margin:0 0 12px;font-size:14px;letter-spacing:.05em;text-transfor
 dialog#info dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:7px 16px;font-size:13.5px;line-height:1.5}
 dialog#info dt{color:var(--muted)} dialog#info dd{margin:0} dialog#info a{color:var(--accent)}
 dialog#info .credit{font-size:12.8px;color:var(--muted);line-height:1.55;margin:14px 0 0}
+dialog{position:relative}
+.dlg-x{position:absolute;top:10px;right:12px;width:32px;height:32px;line-height:1;font-size:22px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer;opacity:.65}
+.dlg-x:hover{opacity:1}
 dialog#info .close{margin-top:16px;width:100%;border-color:var(--rule);background:transparent;color:var(--ink)}
 dialog#core{border:1px solid var(--rule);border-radius:12px;background:var(--paper);color:var(--ink);max-width:860px;width:calc(100% - 32px);max-height:80vh;padding:22px 24px}
 dialog#core::backdrop{background:#0007}
@@ -187,7 +189,6 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
     <span class="grow"></span>
     <button class="btn" id="tNotes" title="Show the commentary as a column">Commentary</button>
     <button class="btn" id="tVoc" title="Show the running vocabulary for this page">Vocabulary</button>
-    <button class="btn" id="tCoreVoc" title="Include the core words in the page vocabulary">+core</button>
     <button class="btn" id="tSwap" title="Swap the two side columns">⇄</button>
     <button class="btn" id="tCore">Core</button>
     <button class="btn" id="tAll" title="Show every note on this page at once">All notes</button>
@@ -1500,6 +1501,7 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
 <div id="pop" data-alpheios-ignore="all"></div>
 
 <dialog id="allnotes" data-alpheios-ignore="all">
+  <button class="dlg-x" id="allX" aria-label="Close" title="Close">×</button>
   <h3>Notes on this page</h3>
   <div id="allnotesBody"></div>
   <button class="btn close" id="allClose">Close</button>
@@ -1517,6 +1519,7 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
 </nav>
 
 <dialog id="core" data-alpheios-ignore="all">
+  <button class="dlg-x" id="coreX" aria-label="Close" title="Close">×</button>
   <h3>Core vocabulary</h3>
   <p class="sub">Words frequent enough that the commentary assumes them. Everything else is glossed beside its own page.</p>
   <dl></dl>
@@ -1524,6 +1527,7 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
 </dialog>
 
 <dialog id="info" data-alpheios-ignore="all">
+  <button class="dlg-x" id="infoX" aria-label="Close" title="Close">×</button>
   <h3>About this edition</h3>
   <dl>
     <dt>Text</dt><dd>Plutarch, Dialogue on Love</dd>
@@ -1546,15 +1550,13 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   var pages=[].slice.call(document.querySelectorAll('.pg')), N=pages.length, cur=0;
   var pop=document.getElementById('pop'), held=null;
 
-  ['theme','nums','marks','voc','notes','order','flow','corevoc'].forEach(function(k){ var v=LS.getItem('k.'+k); if(v) root.dataset[k]=v; });
+  ['theme','nums','marks','voc','notes','order','flow'].forEach(function(k){ var v=LS.getItem('k.'+k); if(v) root.dataset[k]=v; });
   var fs=parseFloat(LS.getItem('k.fs')||'21');
   function applyFs(){ root.style.setProperty('--fs', fs+'px'); }
   function sync(){
     document.getElementById('tNums').classList.toggle('on', root.dataset.nums==='on');
     document.getElementById('tMarks').classList.toggle('on', root.dataset.marks==='on');
     document.getElementById('tVoc').classList.toggle('on', root.dataset.voc==='on');
-    document.getElementById('tCoreVoc').classList.toggle('on', root.dataset.corevoc==='on');
-    document.getElementById('tCoreVoc').disabled = root.dataset.voc!=='on';
     document.getElementById('tNotes').classList.toggle('on', root.dataset.notes==='on');
     document.getElementById('tSwap').disabled = !(root.dataset.notes==='on' || root.dataset.voc==='on');
     document.getElementById('tFlow').classList.toggle('on', root.dataset.flow==='on');
@@ -1734,7 +1736,6 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   };
   document.getElementById('allClose').onclick=function(){ if(allDlg.close) allDlg.close(); else allDlg.removeAttribute('open'); };
   document.getElementById('tVoc').onclick=function(){ toggle('voc'); };
-  document.getElementById('tCoreVoc').onclick=function(){ toggle('corevoc'); };
   document.getElementById('tNotes').onclick=function(){ toggle('notes'); closeNote(); };
   // усі шість перестановок трьох колонок; недоступні панелі просто не показуються
   var ORDERS=['tnv','tvn','ntv','vtn','nvt','vnt'];
@@ -1791,6 +1792,10 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
     document.getElementById(closeBtn).onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
   }
   dlg('info','tInfo','infoClose'); dlg('core','tCore','coreClose');
+  [['core','coreX'],['info','infoX'],['allnotes','allX']].forEach(function(p){
+    var d=document.getElementById(p[0]);
+    document.getElementById(p[1]).onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
+  });
 
   var m=location.hash.match(/^#p(\d+)$/);
   applySpan();

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="sepia" data-nums="on" data-marks="on" data-voc="on" data-corevoc="on" data-notes="off" data-order="tnv" data-flow="off" data-focus="off" data-span="one">
+<html lang="en" data-theme="sepia" data-nums="on" data-marks="on" data-voc="on" data-notes="off" data-order="tnv" data-flow="off" data-focus="off" data-span="one">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -108,7 +108,6 @@ html[data-marks="on"] .w{border-bottom:1px dotted var(--underline)}
 .voc dd{display:inline;margin:0 0 0 .35em;color:var(--muted);font-size:12.6px}
 /* core-слова показуються нарівні з рештою — окремої мітки й приглушення нема,
    клас лишається лише щоб перемикач міг їх сховати */
-html[data-corevoc="off"] .voc div.core{display:none}
 
 /* Коментар — попап біля слова: ніякого руху очей, і не з'їдає постійне місце
    внизу. Стійкий саме тому, що відкривається кліком, а не наведенням. */
@@ -139,6 +138,9 @@ dialog#info h3{margin:0 0 12px;font-size:14px;letter-spacing:.05em;text-transfor
 dialog#info dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:7px 16px;font-size:13.5px;line-height:1.5}
 dialog#info dt{color:var(--muted)} dialog#info dd{margin:0} dialog#info a{color:var(--accent)}
 dialog#info .credit{font-size:12.8px;color:var(--muted);line-height:1.55;margin:14px 0 0}
+dialog{position:relative}
+.dlg-x{position:absolute;top:10px;right:12px;width:32px;height:32px;line-height:1;font-size:22px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink);cursor:pointer;opacity:.65}
+.dlg-x:hover{opacity:1}
 dialog#info .close{margin-top:16px;width:100%;border-color:var(--rule);background:transparent;color:var(--ink)}
 dialog#core{border:1px solid var(--rule);border-radius:12px;background:var(--paper);color:var(--ink);max-width:860px;width:calc(100% - 32px);max-height:80vh;padding:22px 24px}
 dialog#core::backdrop{background:#0007}
@@ -187,7 +189,6 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
     <span class="grow"></span>
     <button class="btn" id="tNotes" title="Show the commentary as a column">Commentary</button>
     <button class="btn" id="tVoc" title="Show the running vocabulary for this page">Vocabulary</button>
-    <button class="btn" id="tCoreVoc" title="Include the core words in the page vocabulary">+core</button>
     <button class="btn" id="tSwap" title="Swap the two side columns">⇄</button>
     <button class="btn" id="tCore">Core</button>
     <button class="btn" id="tAll" title="Show every note on this page at once">All notes</button>
@@ -345,6 +346,7 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
 <div id="pop" data-alpheios-ignore="all"></div>
 
 <dialog id="allnotes" data-alpheios-ignore="all">
+  <button class="dlg-x" id="allX" aria-label="Close" title="Close">×</button>
   <h3>Notes on this page</h3>
   <div id="allnotesBody"></div>
   <button class="btn close" id="allClose">Close</button>
@@ -362,6 +364,7 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
 </nav>
 
 <dialog id="core" data-alpheios-ignore="all">
+  <button class="dlg-x" id="coreX" aria-label="Close" title="Close">×</button>
   <h3>Core vocabulary</h3>
   <p class="sub">Words frequent enough that the commentary assumes them. Everything else is glossed beside its own page.</p>
   <dl><div><dt>ἀγαθός, -ή, -όν</dt> <dd>good<i> 70×</i></dd></div><div><dt>ἄθλιος, -η, -ον</dt> <dd>miserable, wretched, pitiful<i> 6×</i></dd></div><div><dt>αἱρετός, -ή, -όν</dt> <dd>choiceworthy, chosen<i> 8×</i></dd></div><div><dt>αἱρέω</dt> <dd>seize, take; mid. choose<i> 7×</i></dd></div><div><dt>ἀλλά</dt> <dd>but<i> 37×</i></dd></div><div><dt>ἄλλος, -η, -ο</dt> <dd>other, one...another<i> 41×</i></dd></div><div><dt>ἄλογος, -ον</dt> <dd>without reason, irrational<i> 6×</i></dd></div><div><dt>ἄν</dt> <dd>modal adv.<i> 53×</i></dd></div><div><dt>ἀνθρώπινος, -η, -ον</dt> <dd>human, of a human<i> 10×</i></dd></div><div><dt>ἄνθρωπος, ὁ</dt> <dd>human being, person, man<i> 16×</i></dd></div><div><dt>ἅπας, ἅπασα, ἅπαν</dt> <dd>every, all, quite all<i> 17×</i></dd></div><div><dt>ἀπό</dt> <dd>from, away from. (gen.)<i> 9×</i></dd></div><div><dt>ἀρετή, ἡ</dt> <dd>virtue, excellence<i> 35×</i></dd></div><div><dt>ἄριστος, -η, -ον</dt> <dd>best, most excellent<i> 12×</i></dd></div><div><dt>ἀρχή, ἡ</dt> <dd>first principle; beginning<i> 14×</i></dd></div><div><dt>αὐτός, -ή, -ό</dt> <dd>he, she, it; same; -self<i> 68×</i></dd></div><div><dt>βελτίων, -ον (-ονος)</dt> <dd>better<i> 10×</i></dd></div><div><dt>βίος, ὁ</dt> <dd>life<i> 23×</i></dd></div><div><dt>γάρ</dt> <dd>for, since<i> 128×</i></dd></div><div><dt>γε</dt> <dd>at least; indeed; at any rate<i> 18×</i></dd></div><div><dt>γίγνομαι</dt> <dd>come to be, become, be born<i> 26×</i></dd></div><div><dt>γνῶσις, -εως, ἡ</dt> <dd>knowing<i> 6×</i></dd></div><div><dt>δέ</dt> <dd>but, and, on the other hand<i> 267×</i></dd></div><div><dt>δέω</dt> <dd>need, lack (gen.); mid. ask, request; impers. δεῖ, it is necessary (inf.)<i> 9×</i></dd></div><div><dt>δή</dt> <dd>exactly, precisely, just; accordingly<i> 28×</i></dd></div><div><dt>δῆλος, -η, -ον</dt> <dd>clear, evident<i> 18×</i></dd></div><div><dt>διά</dt> <dd>through (gen); for the sake of, on account of (acc)<i> 46×</i></dd></div><div><dt>διαφέρω</dt> <dd>differ, make a difference<i> 11×</i></dd></div><div><dt>δίκαιος, -α, -ον</dt> <dd>just, right, lawful, fair<i> 7×</i></dd></div><div><dt>διορίζω</dt> <dd>define, distinguish; divide<i> 6×</i></dd></div><div><dt>διώκω</dt> <dd>to pursue, follow; prosecute<i> 6×</i></dd></div><div><dt>δοκέω</dt> <dd>seem (good), think, decide; δοκεῖ, it seems, is thought<i> 22×</i></dd></div><div><dt>δύναμις, -εως, ἡ</dt> <dd>ability, capacity, power<i> 7×</i></dd></div><div><dt>ἑαυτοῦ, -ῆς, -οῦ</dt> <dd>himself, her-, it-, them-<i> 23×</i></dd></div><div><dt>εἰ</dt> <dd>if, whether<i> 44×</i></dd></div><div><dt>εἰμί</dt> <dd>be, exist<i> 151×</i></dd></div><div><dt>εἴπερ</dt> <dd>if really; if, as is true; since<i> 7×</i></dd></div><div><dt>εἰς</dt> <dd>into, to, in regard to (acc.)<i> 6×</i></dd></div><div><dt>εἷς, μία, ἕν</dt> <dd>one, single, alone<i> 25×</i></dd></div><div><dt>ἐκ, ἐξ</dt> <dd>out of, from (gen.)<i> 20×</i></dd></div><div><dt>ἕκαστος, -η, -ον</dt> <dd>each, each one<i> 19×</i></dd></div><div><dt>ἐκτός</dt> <dd>outside; out of, far from (gen.)<i> 6×</i></dd></div><div><dt>ἐν</dt> <dd>in, on, among. (dat.)<i> 70×</i></dd></div><div><dt>ἐναντίος, -α, -ον</dt> <dd>opposite, contrary<i> 8×</i></dd></div><div><dt>ἐνέργεια, ἡ</dt> <dd>activity<i> 22×</i></dd></div><div><dt>ἔοικα</dt> <dd>seem, seem likely, be like (dat.)<i> 13×</i></dd></div><div><dt>ἐπαινέω</dt> <dd>praise, approve, commend<i> 6×</i></dd></div><div><dt>ἐπί</dt> <dd>upon (gen.), to (acc.), near, at (dat.)<i> 28×</i></dd></div><div><dt>ἐπιζητέω</dt> <dd>seek after<i> 7×</i></dd></div><div><dt>ἐπιστήμη, ἡ</dt> <dd>knowledge, understanding<i> 9×</i></dd></div><div><dt>ἔργον, τό</dt> <dd>product, work; deed, act<i> 18×</i></dd></div><div><dt>ἕτερος, -α, -ον</dt> <dd>other, different<i> 13×</i></dd></div><div><dt>ἔτι</dt> <dd>still, besides; furthermore, in addition<i> 11×</i></dd></div><div><dt>εὖ</dt> <dd>well<i> 13×</i></dd></div><div><dt>εὐδαιμονία, ἡ</dt> <dd>well-being, happiness<i> 26×</i></dd></div><div><dt>εὐδαίμων, -ον</dt> <dd>happy, well off<i> 18×</i></dd></div><div><dt>ἔχω</dt> <dd>have; be able; be disposed; know<i> 32×</i></dd></div><div><dt>ζάω</dt> <dd>live<i> 11×</i></dd></div><div><dt>ζητέω</dt> <dd>seek, look for, investigate<i> 13×</i></dd></div><div><dt>ἤ</dt> <dd>or (either...or); than<i> 63×</i></dd></div><div><dt>ἡδονή, ἡ</dt> <dd>pleasure, enjoyment, delight<i> 10×</i></dd></div><div><dt>ἡδύς, -εῖα, -ύ</dt> <dd>pleasant, sweet, glad<i> 7×</i></dd></div><div><dt>ἡμεῖς, ἡμῶν, ἡμῖν, ἡμᾶς</dt> <dd>we<i> 10×</i></dd></div><div><dt>θεῖος, -α, -ον</dt> <dd>god-like, divine<i> 8×</i></dd></div><div><dt>ἰατρική (τέχνη), ἡ</dt> <dd>(art of) medicine<i> 6×</i></dd></div><div><dt>ἰδέα, ἡ</dt> <dd>form; look, appearance<i> 10×</i></dd></div><div><dt>ἱκανός, -ή, -όν</dt> <dd>enough, sufficient; capable<i> 8×</i></dd></div><div><dt>ἴσως</dt> <dd>perhaps, probably; equally, likely<i> 16×</i></dd></div><div><dt>καθάπερ</dt> <dd>just as, according as<i> 19×</i></dd></div><div><dt>καί</dt> <dd>and; also, even, too; in fact, actually<i> 426×</i></dd></div><div><dt>κάλλιστος, -η, -ον</dt> <dd>most noble or beautiful<i> 8×</i></dd></div><div><dt>καλός, -ή, -όν</dt> <dd>beautiful; noble, fine<i> 11×</i></dd></div><div><dt>καλῶς</dt> <dd>well, nobly<i> 10×</i></dd></div><div><dt>κατά</dt> <dd>down (from, to), according to, in<i> 66×</i></dd></div><div><dt>κοινός, -ή, -όν</dt> <dd>common, ordinary; public<i> 8×</i></dd></div><div><dt>κύριος, -α, -ον</dt> <dd>authoritative, decisive<i> 6×</i></dd></div><div><dt>λέγω, ἐρέω, εἶπον</dt> <dd>say, call, name; mean<i> 76×</i></dd></div><div><dt>λόγος, ὁ</dt> <dd>word, speech, account<i> 43×</i></dd></div><div><dt>λοιπός, -ή, -όν</dt> <dd>remaining, the rest<i> 6×</i></dd></div><div><dt>μακαρίζω</dt> <dd>deem blessed or happy<i> 6×</i></dd></div><div><dt>μακάριος, -α, -ον</dt> <dd>blessed, happy<i> 13×</i></dd></div><div><dt>μάλιστα</dt> <dd>most of all, mostly, especially<i> 13×</i></dd></div><div><dt>μᾶλλον</dt> <dd>more, rather<i> 14×</i></dd></div><div><dt>μέγας, μεγάλη, μέγα</dt> <dd>big, great, important<i> 8×</i></dd></div><div><dt>μέν</dt> <dd>on the one hand<i> 75×</i></dd></div><div><dt>μή</dt> <dd>not, lest<i> 28×</i></dd></div><div><dt>μόνος, -η, -ον</dt> <dd>alone, only, solitary<i> 6×</i></dd></div><div><dt>νῦν</dt> <dd>now; as it is<i> 6×</i></dd></div><div><dt>ὁ, ἡ, τό</dt> <dd>the<i> 767×</i></dd></div><div><dt>οἰκεῖος, -α, -ον</dt> <dd>proper, fitting; one’s own<i> 8×</i></dd></div><div><dt>οἷος, -α, -ον</dt> <dd>which sort, who; for example<i> 16×</i></dd></div><div><dt>ὅλως</dt> <dd>entirely, completely, wholely<i> 10×</i></dd></div><div><dt>ὁμοίως</dt> <dd>similarly, likewise<i> 14×</i></dd></div><div><dt>ὁράω</dt> <dd>see, look, behold<i> 6×</i></dd></div><div><dt>ὅς, ἥ, ὅ</dt> <dd>who, which, that<i> 39×</i></dd></div><div><dt>ὅσος -η -ον</dt> <dd>as many as; how many?<i> 10×</i></dd></div><div><dt>ὅτι</dt> <dd>that; because<i> 21×</i></dd></div><div><dt>οὐ, οὐκ, οὐχ, οὐχί</dt> <dd>not<i> 41×</i></dd></div><div><dt>οὐδέ</dt> <dd>nor; adv. not even<i> 18×</i></dd></div><div><dt>οὐδείς, οὐδεμία, οὐδέν</dt> <dd>no one, nothing<i> 21×</i></dd></div><div><dt>οὖν</dt> <dd>and so, then; at all events<i> 25×</i></dd></div><div><dt>οὔτε</dt> <dd>and not, neither...nor<i> 6×</i></dd></div><div><dt>οὗτος, αὕτη, τοῦτο</dt> <dd>this, these<i> 122×</i></dd></div><div><dt>οὕτως</dt> <dd>thus, in this way<i> 27×</i></dd></div><div><dt>παρά</dt> <dd>from, at, to (the side of); contrary<i> 9×</i></dd></div><div><dt>πᾶς, πᾶσα, πᾶν</dt> <dd>every, all, the whole<i> 36×</i></dd></div><div><dt>περί</dt> <dd>around, about, concerning (acc/gen)<i> 50×</i></dd></div><div><dt>πλείων, πλείον (-ονος)</dt> <dd>more<i> 7×</i></dd></div><div><dt>πλοῦτος, ὁ</dt> <dd>wealth, riches<i> 7×</i></dd></div><div><dt>ποιέω</dt> <dd>do, make; bring about<i> 13×</i></dd></div><div><dt>ποῖος, -α, -ον</dt> <dd>what sort? what kind?<i> 6×</i></dd></div><div><dt>πολιτική (τέχνη), ἡ</dt> <dd>political (art), political science<i> 9×</i></dd></div><div><dt>πολιτικός -ή, -όν</dt> <dd>political; politician<i> 8×</i></dd></div><div><dt>πολύς, πολλά, πολύ</dt> <dd>much, many<i> 28×</i></dd></div><div><dt>πότερος, -α, -ον</dt> <dd>whether, which (of two)?<i> 6×</i></dd></div><div><dt>πρακτικός, -ή, -όν</dt> <dd>active, practical<i> 6×</i></dd></div><div><dt>πρακτός, -όν</dt> <dd>to be done<i> 7×</i></dd></div><div><dt>πρᾶξις, -εως, ἡ</dt> <dd>action, deed<i> 23×</i></dd></div><div><dt>πράττω</dt> <dd>do, accomplish, make, act<i> 12×</i></dd></div><div><dt>πρός</dt> <dd>to (acc.), near, in addition to (dat.)<i> 24×</i></dd></div><div><dt>πως</dt> <dd>somehow, in any way<i> 8×</i></dd></div><div><dt>πῶς</dt> <dd>how? in what way?<i> 6×</i></dd></div><div><dt>σπουδαῖος, -α, -ον</dt> <dd>good, excellent; earnest<i> 8×</i></dd></div><div><dt>στρατηγικὴ (τέχνη), ἡ</dt> <dd>generalship, art of a general<i> 6×</i></dd></div><div><dt>συμβαίνω</dt> <dd>happen, occur, result<i> 9×</i></dd></div><div><dt>σῶμα, -ατος, τό</dt> <dd>body<i> 8×</i></dd></div><div><dt>τάχα</dt> <dd>perhaps; quickly<i> 6×</i></dd></div><div><dt>τε</dt> <dd>and, both<i> 16×</i></dd></div><div><dt>τέλειος, -α, -ον</dt> <dd>final, perfect, completed<i> 20×</i></dd></div><div><dt>τέλος, -εος, τό</dt> <dd>end (result)<i> 21×</i></dd></div><div><dt>τέχνη, ἡ</dt> <dd>craft, art<i> 6×</i></dd></div><div><dt>τίθημι</dt> <dd>place, put, set; assign<i> 10×</i></dd></div><div><dt>τις, τι</dt> <dd>anyone, -thing, someone, -thing<i> 101×</i></dd></div><div><dt>τίς, τί</dt> <dd>who?, which?; why?<i> 21×</i></dd></div><div><dt>τοιοῦτος, -αύτη, -οῦτο</dt> <dd>such, this sort<i> 30×</i></dd></div><div><dt>τρόπος, ὁ</dt> <dd>manner, way; turn, direction<i> 6×</i></dd></div><div><dt>τυγχάνω</dt> <dd>to chance upon, attain; happen<i> 7×</i></dd></div><div><dt>τύχη, ἡ</dt> <dd>chance, luck, fortune<i> 14×</i></dd></div><div><dt>ὑπάρχω</dt> <dd>exist, be available; belong to<i> 13×</i></dd></div><div><dt>ὑπό</dt> <dd>by, because of, (gen.), under<i> 13×</i></dd></div><div><dt>ὑπολαμβάνω</dt> <dd>take up, reply; suppose<i> 7×</i></dd></div><div><dt>φαίνω</dt> <dd>show; mid. appear, seem<i> 33×</i></dd></div><div><dt>φίλος -η -ον</dt> <dd>dear, friendly; friend, kin<i> 11×</i></dd></div><div><dt>φύσις, -εως ἡ</dt> <dd>nature<i> 8×</i></dd></div><div><dt>φύω</dt> <dd>am (by nature); grow, bring forth<i> 11×</i></dd></div><div><dt>χάριν</dt> <dd>for the sake of (preceding gen.)<i> 7×</i></dd></div><div><dt>χρόνος, ὁ</dt> <dd>time<i> 7×</i></dd></div><div><dt>ψυχή, ἡ</dt> <dd>soul, spirit; breath, life<i> 21×</i></dd></div><div><dt>ὡς</dt> <dd>as, thus, so, that; when, since<i> 19×</i></dd></div><div><dt>ὥσπερ</dt> <dd>as, just as, as if<i> 12×</i></dd></div><div><dt>ὥστε</dt> <dd>so that, that, so as to<i> 11×</i></dd></div></dl>
@@ -369,6 +372,7 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
 </dialog>
 
 <dialog id="info" data-alpheios-ignore="all">
+  <button class="dlg-x" id="infoX" aria-label="Close" title="Close">×</button>
   <h3>About this edition</h3>
   <dl>
     <dt>Text</dt><dd>Aristotle, Nicomachean Ethics Book I</dd>
@@ -391,15 +395,13 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   var pages=[].slice.call(document.querySelectorAll('.pg')), N=pages.length, cur=0;
   var pop=document.getElementById('pop'), held=null;
 
-  ['theme','nums','marks','voc','notes','order','flow','corevoc'].forEach(function(k){ var v=LS.getItem('k.'+k); if(v) root.dataset[k]=v; });
+  ['theme','nums','marks','voc','notes','order','flow'].forEach(function(k){ var v=LS.getItem('k.'+k); if(v) root.dataset[k]=v; });
   var fs=parseFloat(LS.getItem('k.fs')||'21');
   function applyFs(){ root.style.setProperty('--fs', fs+'px'); }
   function sync(){
     document.getElementById('tNums').classList.toggle('on', root.dataset.nums==='on');
     document.getElementById('tMarks').classList.toggle('on', root.dataset.marks==='on');
     document.getElementById('tVoc').classList.toggle('on', root.dataset.voc==='on');
-    document.getElementById('tCoreVoc').classList.toggle('on', root.dataset.corevoc==='on');
-    document.getElementById('tCoreVoc').disabled = root.dataset.voc!=='on';
     document.getElementById('tNotes').classList.toggle('on', root.dataset.notes==='on');
     document.getElementById('tSwap').disabled = !(root.dataset.notes==='on' || root.dataset.voc==='on');
     document.getElementById('tFlow').classList.toggle('on', root.dataset.flow==='on');
@@ -579,7 +581,6 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   };
   document.getElementById('allClose').onclick=function(){ if(allDlg.close) allDlg.close(); else allDlg.removeAttribute('open'); };
   document.getElementById('tVoc').onclick=function(){ toggle('voc'); };
-  document.getElementById('tCoreVoc').onclick=function(){ toggle('corevoc'); };
   document.getElementById('tNotes').onclick=function(){ toggle('notes'); closeNote(); };
   // усі шість перестановок трьох колонок; недоступні панелі просто не показуються
   var ORDERS=['tnv','tvn','ntv','vtn','nvt','vnt'];
@@ -636,6 +637,10 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
     document.getElementById(closeBtn).onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
   }
   dlg('info','tInfo','infoClose'); dlg('core','tCore','coreClose');
+  [['core','coreX'],['info','infoX'],['allnotes','allX']].forEach(function(p){
+    var d=document.getElementById(p[0]);
+    document.getElementById(p[1]).onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
+  });
 
   var m=location.hash.match(/^#p(\d+)$/);
   applySpan();
