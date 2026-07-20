@@ -1,6 +1,6 @@
 # Exocortex — Ancient Greek commented editions
 
-**52 commented editions of Ancient Greek texts**, turned into a reading interface.
+**56 commented editions of Ancient Greek texts**, turned into a reading interface.
 
 **▶ Read online: https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/**
 
@@ -105,17 +105,29 @@ first — buy a print copy or send them something. That matters more than anythi
 |---|---|--:|--:|--:|---|
 | [Batrachomyomachia](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/batrachomyomachia/) | pseudo-Homer | 18 | 270 | 402 | [free PDF](https://quillful.blogspot.com/p/commentaries.html) |
 
+### Patristic Readers
+
+[site](https://patristicreaders.com/)
+> The reader editions are the work of “Seumas”; the free PDFs are on the site and printed copies on Amazon.
+
+| Text | Author | Pages | Lines | Notes | Source |
+|---|---|--:|--:|--:|---|
+| [The Martyrdom of Polycarp](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/polycarp-martyrdom/) | Anonymous (2nd c.) | 27 | 270 | 173 | [free PDF](https://patristicreaders.com/) |
+| [The Passion of Perpetua and Felicity](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/perpetua-passion/) | Anonymous (Greek recension) | 43 | 426 | 309 | [free PDF](https://patristicreaders.com/) |
+| [Gregory of Nyssa, Ad Ablabium (On Not Three Gods)](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/gregory-ad-ablabium/) | Gregory of Nyssa | 41 | 407 | 272 | [free PDF](https://patristicreaders.com/) |
+| [Gregory of Nyssa, Ad Simplicium](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/gregory-ad-simplicium/) | Gregory of Nyssa | 15 | 147 | 115 | [free PDF](https://patristicreaders.com/) |
+
 ## Known issues
 
 Each edition was OCR'd from the editor's own PDF; a neural pass then anchored every note to the word it
 comments on. **The commentary text itself is reproduced as written** — these are faults of our pipeline, not
 of the editors. Per-text numbers are in *About this edition* on every page.
 
-| | across these 52 editions |
+| | across these 56 editions |
 |---|---|
-| Notes anchored to a **line** instead of a word | 2,052 (2.2%) — the neural pass could not match the editor's citation form to a word in the text (`ἀπεφήα(σ)ο` for `ἀπεφήναο`). They still open, from the line number. |
-| Multi-word phrases where **not every word** is underlined | 2,215 left, out of 9,509 — the rest were repaired automatically at build time |
-| Leftover **beta-code** in a note | 2 editions (Plato's *Symposium*, Herodotus VII), flagged on their own pages |
+| Notes anchored to a **line** instead of a word | 2,168 (2.3%) — the neural pass could not match the editor's citation form to a word in the text (`ἀπεφήα(σ)ο` for `ἀπεφήναο`). They still open, from the line number. |
+| Multi-word phrases where **not every word** is underlined | 2,227 left, out of 9,604 — the rest were repaired automatically at build time |
+| Leftover **beta-code** in a note | 1 edition (Herodotus' Histories Book 7), flagged on its own page |
 | **Missing chapter and dialogue headings** | done for the 10 editions that collect several works under one cover (102 titles, taken from the printed tables of contents and title pages). Editions containing a single work carry no heading, since the title is already at the top of the page. |
 | The editor's **own** slips | occasionally a note cites a line number that is off by one or two. We do not correct these, and **we cannot detect them** — the anchoring is internally consistent either way. |
 
@@ -172,9 +184,16 @@ Within a page the numbers are consistent with the commentary, which is what they
   point at), and *+core* / *+gloss* additionally lists entries for words this page uses but
   the book glosses on another page. Both stay off until you switch them on, so the page
   reads exactly as before by default. They rest on an automatic step from a word's form to
-  its dictionary headword: it recognises roughly nine words in ten, and a few look-alike
-  forms (ἐν beside ἕν, καί beside αἴ) can light a neighbouring entry. Treat it as a reading
-  aid, not an index — when in doubt, a double-click still opens the full lexicon.
+  its dictionary headword: it links most words, and a few look-alike forms — ones that fall
+  together once the accents are stripped (ἐν beside the numeral ἕν, καί beside the conditional
+  εἰ) — can light a neighbouring entry. Treat it as a reading aid, not an index; when in doubt,
+  a double-click still opens the full lexicon.
+
+  One class stays unlinked on purpose. Where an editor lists a word in a dialect spelling
+  but the morphology reads it in the standard one — *ἐσαπικνέεσθαι* parsed as
+  εἰσαφικνέομαι while the entry stands under ἐσαπικνέομαι — the form and the headword no
+  longer meet, and nothing lights. These are Ionic and Homeric texts, so it happens; for
+  those words the double-click to Alpheios is the surer path.
 
 - **Herodotus VII needs redoing.** This one edition came through the OCR badly and
   the marks are still on it: stretches of note where the Greek is written in Latin
