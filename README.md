@@ -49,7 +49,7 @@ first — buy a print copy or send them something. That matters more than anythi
 | [Homer's Odyssey 6-8](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/odyssey-6-8/) | Homer | 65 | 1,264 | 1,696 | [free PDF](https://geoffreysteadman.com/homers-odyssey-6-8/) |
 | [Lysias I](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/lysias-1/) | Lysias | 30 | 264 | 533 | [free PDF](https://geoffreysteadman.com/lysias-i/) |
 | [Plato, Apology](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/plato-apology/) | Plato | 103 | 989 | 2,411 | [free PDF](https://geoffreysteadman.com/platos-apology/) |
-| [Plato, Phaedo](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/plato-phaedo/) | Plato | 303 | 2,703 | 4,594 | [free PDF](https://geoffreysteadman.com/phaedo/) |
+| [Plato, Phaedo](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/plato-phaedo/) | Plato | 224 | 2,703 | 4,594 | [free PDF](https://geoffreysteadman.com/phaedo/) |
 | [Plato, Symposium](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/plato-symposium/) | Plato | 72 | 2,020 | 2,394 | [free PDF](https://geoffreysteadman.com/platos-symposium/) |
 | [Plato’s Crito](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/plato-crito/) | Plato | 51 | 502 | 1,024 | [free PDF](https://geoffreysteadman.com/platos-crito/) |
 | [Plato's Meno](https://exocortex-ancientgreek.github.io/exocortex-greek-commentaries/texts/plato-meno/) | Plato | 93 | 1,295 | 2,225 | [free PDF](https://geoffreysteadman.com/platos-meno/) |
