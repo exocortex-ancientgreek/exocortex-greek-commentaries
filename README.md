@@ -167,6 +167,13 @@ Within a page the numbers are consistent with the commentary, which is what they
   never captured. When you want a word the page glosses and do not find it in the
   column, a double-click still opens the full lexicon for it.
 
+- **Herodotus VII needs redoing.** This one edition came through the OCR badly and
+  the marks are still on it: stretches of note where the Greek is written in Latin
+  letters (betacode — ἐπιτάσσων read as *epitassein*), and multi-word phrases that
+  kept only their first word (the note glosses *ἐς Σάρδις* but only *ἐς* is marked in
+  the text). The Greek text itself reads correctly; it is the commentary that is
+  damaged. It is on the list to run through the pipeline again. Herodotus I is clean.
+
 If something looks wrong in a text, please open an issue — it is useful to know
 which page.
 
