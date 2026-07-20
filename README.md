@@ -184,10 +184,12 @@ Within a page the numbers are consistent with the commentary, which is what they
   point at), and *+core* / *+gloss* additionally lists entries for words this page uses but
   the book glosses on another page. Both stay off until you switch them on, so the page
   reads exactly as before by default. They rest on an automatic step from a word's form to
-  its dictionary headword: it links most words, and a few look-alike forms — ones that fall
-  together once the accents are stripped (ἐν beside the numeral ἕν, καί beside the conditional
-  εἰ) — can light a neighbouring entry. Treat it as a reading aid, not an index; when in doubt,
-  a double-click still opens the full lexicon.
+  its dictionary headword, accents and breathings kept, so near-twins stay apart (ἐν is not
+  the numeral ἕν, οὐ is not the relative οὗ). It links most words. Where a form is genuinely
+  two words at once — τοῦ as the article or as a form of τίς — it lights both entries, which
+  is right; and a dialectal cross-listing in the morphology can still light a neighbour now
+  and then. Treat it as a reading aid, not an index; when in doubt, a double-click still opens
+  the full lexicon.
 
   One class stays unlinked on purpose. Where an editor lists a word in a dialect spelling
   but the morphology reads it in the standard one — *ἐσαπικνέεσθαι* parsed as
