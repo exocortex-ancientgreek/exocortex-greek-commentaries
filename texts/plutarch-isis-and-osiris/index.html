@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="sepia" data-nums="on" data-marks="on" data-voc="on" data-notes="off" data-order="tnv" data-flow="off" data-focus="off" data-span="one">
+<html lang="en" data-theme="sepia" data-nums="on" data-marks="on" data-voc="on" data-notes="on" data-order="tvn" data-flow="off" data-focus="off" data-span="one">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -85,7 +85,7 @@ html[data-flow="on"][data-nums="off"] .ln .num:not(.w){display:none}
 .w,.p{border-radius:2px}
 /* підкреслення = є коментар; приглушене, бо під ним третина слів */
 html[data-marks="on"] .w{border-bottom:1px dotted var(--underline)}
-.w:hover,.w.on{background:var(--mark);border-bottom-color:transparent}
+.w:hover,.w.on,.w.wlit{background:var(--mark);border-bottom-color:transparent}
 .w{cursor:pointer}
 
 /* Словник сторінки — колонка праворуч від тексту. Ширина ~24em: у ній більшість
@@ -1772,7 +1772,10 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   <p class="credit" style="margin-top:0">Text and commentary were digitised by OCR, anchored to individual words by a neural pass, then post-processed. These are the measured artefacts of that pipeline — the commentary itself is unaltered.</p>
   <dl><dt>Notes</dt><dd>2,047</dd><dt>Anchored to a line, not a word</dt><dd>9 · 0.3% — the neural pass could not match the editor's citation form to a word in the text; these open from the line number</dd><dt>Phrases only partly anchored</dt><dd>59 — a multi-word phrase where not every word is underlined, usually one broken across a line</dd></dl>
   <p class="credit">Greek text in the public domain. Vocabulary and commentary by Evan Hayes and Stephen Nimis, reused under CC BY-NC-SA 3.0; this reading edition is released under the same licence. Word analysis is provided by Alpheios. Not affiliated with or endorsed by the original editor.</p>
-  <button class="btn close" id="infoClose">Close</button>
+  <div style="display:flex;gap:8px;margin-top:16px">
+    <button class="btn" id="infoReset" style="flex:0 0 auto">Reset display to defaults</button>
+    <button class="btn close" id="infoClose" style="flex:1;margin-top:0">Close</button>
+  </div>
 </dialog>
 
 <script>
@@ -1780,6 +1783,9 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   var root=document.documentElement, LS=localStorage;
   var pages=[].slice.call(document.querySelectorAll('.pg')), N=pages.length, cur=0;
   var pop=document.getElementById('pop'), held=null;
+  // підписи колонок — тут, а не в блоці кнопки: sync() кличе applyOrder() ще на
+  // старті, коли var у тому блоці був би undefined (присвоєння не гоїститься).
+  var LABEL={t:'Text',v:'Vocab',n:'Commentary'};
 
   ['theme','nums','marks','voc','notes','order','flow'].forEach(function(k){ var v=LS.getItem('k.'+k); if(v) root.dataset[k]=v; });
   var fs=parseFloat(LS.getItem('k.fs')||'21');
@@ -1791,6 +1797,7 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
     document.getElementById('tNotes').classList.toggle('on', root.dataset.notes==='on');
     document.getElementById('tSwap').disabled = !(root.dataset.notes==='on' || root.dataset.voc==='on');
     document.getElementById('tFlow').classList.toggle('on', root.dataset.flow==='on');
+    if(typeof applyOrder==='function') applyOrder();   // видимі колонки змінились — оновити підпис кнопки
   }
   function toggle(k){ root.dataset[k]=root.dataset[k]==='on'?'off':'on'; LS.setItem('k.'+k,root.dataset[k]); sync(); }
   applyFs(); sync();
@@ -1898,11 +1905,19 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   //    доводиться тримати постійну смугу. ──────────────────────────────────────
   // Наведення — ТИМЧАСОВА підсвітка: гасне, щойно відвів. Клік — закріплює,
   // поки не знімеш. Липка підсвітка на наведення дратує: прибрати її нічим.
-  var litSn=null, pinned=null;
+  var litSn=null, litWords=[], pinned=null;
+  // підсвічуємо ВСІ слова звороту (одна нотатка = кілька слів через доанкорування),
+  // а не лише те, на яке навели. Двобічно: наведення на нотатку теж світить слова.
+  function paintWords(nid){
+    litWords.forEach(function(w){ w.classList.remove('wlit'); });
+    litWords = nid ? [].slice.call(document.querySelectorAll('.w[data-n="'+nid+'"]')) : [];
+    litWords.forEach(function(w){ w.classList.add('wlit'); });
+  }
   function paint(sn){
     if(litSn && litSn!==sn) litSn.classList.remove('lit');
     litSn=sn || null;
     if(sn) sn.classList.add('lit');
+    paintWords(sn ? sn.id : null);
   }
   function unlit(){ pinned=null; paint(null); }
   function hoverOff(){ paint(pinned); }        // повертаємось до закріпленої, якщо є
@@ -1938,9 +1953,14 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
     pop.style.left=left+'px'; pop.style.top=top+'px';
   }
   document.addEventListener('mouseover',function(e){
-    if(root.dataset.notes!=='on') return;
     var w=e.target.closest('.w');
-    if(w){ litInColumn(w.dataset.n,{scroll:true}); return; }
+    if(w){
+      // колонка коментаря є — світимо нотатку й слова; нема — хоч слова звороту
+      if(root.dataset.notes==='on') litInColumn(w.dataset.n,{scroll:true});
+      else paintWords(w.dataset.n);
+      return;
+    }
+    if(root.dataset.notes!=='on'){ paintWords(null); return; }
     var sn=e.target.closest('.sn');
     if(sn){ paint(sn); return; }
     hoverOff();                     // пішли геть від слова й від нотатки — гасимо
@@ -1968,18 +1988,36 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   document.getElementById('allClose').onclick=function(){ if(allDlg.close) allDlg.close(); else allDlg.removeAttribute('open'); };
   document.getElementById('tVoc').onclick=function(){ toggle('voc'); };
   document.getElementById('tNotes').onclick=function(){ toggle('notes'); closeNote(); };
-  // усі шість перестановок трьох колонок; недоступні панелі просто не показуються
-  var ORDERS=['tnv','tvn','ntv','vtn','nvt','vnt'];
-  var ORDER_LABEL={tnv:'Text · Commentary · Vocab',tvn:'Text · Vocab · Commentary',
-                   ntv:'Commentary · Text · Vocab',vtn:'Vocab · Text · Commentary',
-                   nvt:'Commentary · Vocab · Text',vnt:'Vocab · Commentary · Text'};
+  // Кнопка тасує ЛИШЕ видимі колонки: раніше вона крутила всі шість перестановок
+  // трьох, тож при вимкненому словнику чи коментарі клацання наче нічого не робило
+  // (переставлялася прихована колонка). Тепер — усі перестановки саме видимих.
+  function visibleCols(){
+    return (root.dataset.order||'tvn').split('').filter(function(c){
+      return c==='t' || (c==='v' && root.dataset.voc==='on') || (c==='n' && root.dataset.notes==='on');
+    });
+  }
+  function perms(a){
+    if(a.length<2) return [a.slice()];
+    var out=[];
+    a.forEach(function(x,i){
+      perms(a.slice(0,i).concat(a.slice(i+1))).forEach(function(p){ out.push([x].concat(p)); });
+    });
+    return out;
+  }
   function applyOrder(){
-    var o=root.dataset.order||'tnv';
-    document.getElementById('tSwap').title='Column order: '+(ORDER_LABEL[o]||o)+' — click to cycle';
+    var vis=visibleCols();
+    document.getElementById('tSwap').title='Order: '+vis.map(function(c){return LABEL[c];}).join(' · ')+' — click to cycle';
   }
   document.getElementById('tSwap').onclick=function(){
-    var i=ORDERS.indexOf(root.dataset.order||'tnv');
-    root.dataset.order=ORDERS[(i+1)%ORDERS.length];
+    var vis=visibleCols();
+    if(vis.length<2) return;                       // одна колонка — тасувати нічого
+    // Перестановки будуємо з ФІКСОВАНОЇ основи, а не з поточного порядку: інакше
+    // поточний завжди перший у списку й кнопка лише пінгувала між двома станами.
+    var base=['t','v','n'].filter(function(c){ return vis.indexOf(c)>=0; });
+    var all=perms(base).map(function(p){ return p.join(''); });
+    var next=all[(all.indexOf(vis.join(''))+1)%all.length];
+    var hidden=['t','n','v'].filter(function(c){ return next.indexOf(c)<0; });
+    root.dataset.order=next+hidden.join('');        // приховані — у хвіст, слот байдужий
     LS.setItem('k.order', root.dataset.order); applyOrder();
   };
   applyOrder();
@@ -2027,6 +2065,12 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
     var d=document.getElementById(p[0]);
     document.getElementById(p[1]).onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
   });
+  // Скидання вигляду: викидаємо всі збережені налаштування й перезавантажуємось —
+  // тоді застосуються дефолти з <html>. Зручно для тестування.
+  document.getElementById('infoReset').onclick=function(){
+    ['theme','nums','marks','voc','notes','order','flow','fs','span'].forEach(function(k){ LS.removeItem('k.'+k); });
+    location.reload();
+  };
 
   var m=location.hash.match(/^#p(\d+)$/);
   applySpan();
