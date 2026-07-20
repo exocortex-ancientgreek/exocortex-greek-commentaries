@@ -167,6 +167,15 @@ Within a page the numbers are consistent with the commentary, which is what they
   never captured. When you want a word the page glosses and do not find it in the
   column, a double-click still opens the full lexicon for it.
 
+- **Linking a word to its dictionary entry.** New and optional — the *Link* button lights
+  the running-vocabulary entry for the word you point at (and the words for the entry you
+  point at), and *+core* / *+gloss* additionally lists entries for words this page uses but
+  the book glosses on another page. Both stay off until you switch them on, so the page
+  reads exactly as before by default. They rest on an automatic step from a word's form to
+  its dictionary headword: it recognises roughly nine words in ten, and a few look-alike
+  forms (ἐν beside ἕν, καί beside αἴ) can light a neighbouring entry. Treat it as a reading
+  aid, not an index — when in doubt, a double-click still opens the full lexicon.
+
 - **Herodotus VII needs redoing.** This one edition came through the OCR badly and
   the marks are still on it: stretches of note where the Greek is written in Latin
   letters (betacode — ἐπιτάσσων read as *epitassein*), and multi-word phrases that
