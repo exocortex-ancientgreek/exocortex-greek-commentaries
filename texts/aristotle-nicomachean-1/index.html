@@ -125,6 +125,11 @@ html[data-vlink="on"] .voc div.vlit{background:var(--mark);border-radius:3px;box
 #pop b{font-family:"Gentium Plus",Georgia,serif;font-weight:600;font-size:15.4px}
 #pop .x{position:absolute;top:3px;right:4px;border:0;background:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;line-height:1;padding:4px 6px;border-radius:5px}
 #pop .x:hover{color:var(--ink);background:#0000000d}
+/* Попап може містити кілька частин — коментар і словникову статтю разом. */
+#pop .pop-sec + .pop-sec{margin-top:9px;padding-top:9px;border-top:1px solid var(--rule)}
+#pop .pop-voc b{font-size:14.6px}
+/* Схований словник → слово клікабельне для попапа зі статтею (підказка курсором). */
+html[data-voc="off"] .p[data-v]{cursor:pointer}
 
 nav.pager{flex:0 0 auto;max-width:2000px;width:100%;margin:0 auto;padding:12px 18px 18px;display:flex;gap:10px;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
 nav.pager .btn{border-color:var(--rule);background:transparent;color:var(--ink)}
@@ -560,25 +565,45 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
     else if(opts && opts.scroll) sn.scrollIntoView({block:'nearest'});
     return true;
   }
+  // Вміст попапа — те, чого зараз НЕ видно в колонках: коментар (якщо колонка
+  // коментаря схована) + словникова стаття (якщо схований словник). Схований словник +
+  // клік на слово = стаття у попапі; є ще й коментар — виводимо разом.
+  function popupContentFor(w){
+    var parts=[];
+    if(root.dataset.notes!=='on' && w.dataset.n){
+      var src=document.getElementById(w.dataset.n);
+      if(src) parts.push('<div class="pop-sec">'+(src.querySelector('.snb')||src).innerHTML+'</div>');
+    }
+    if(root.dataset.voc!=='on' && w.dataset.v){
+      var seen={};
+      w.dataset.v.split(' ').forEach(function(id){
+        if(seen[id]) return; seen[id]=1;
+        var e=document.getElementById(id);
+        if(e) parts.push('<div class="pop-sec pop-voc"><b>'+e.querySelector('dt').innerHTML+'</b> '+e.querySelector('dd').innerHTML+'</div>');
+      });
+    }
+    return parts.join('');
+  }
   function openNote(w){
-    if(root.dataset.notes==='on'){
-      // повторний клік по тому самому слову — відкріпити
-      if(pinned && pinned.id===w.dataset.n) unlit();
-      else litInColumn(w.dataset.n,{scroll:true,pin:true});
+    var content=popupContentFor(w);
+    if(content){
+      if(held) held.classList.remove('on');
+      held=w; w.classList.add('on');
+      pop.innerHTML='<button class="x" aria-label="Close">×</button>'+content;
+      pop.style.display='block';
+      pop.style.left='0px'; pop.style.top='0px';
+      var r=w.getBoundingClientRect(), b=pop.getBoundingClientRect();
+      var left=Math.min(Math.max(8, r.left-12), innerWidth-b.width-8);
+      // під словом, а якщо не влазить — над ним; саме слово не перекриваємо
+      var top = (r.bottom+10+b.height<=innerHeight) ? r.bottom+10 : Math.max(8, r.top-10-b.height);
+      pop.style.left=left+'px'; pop.style.top=top+'px';
       return;
     }
-    var src=document.getElementById(w.dataset.n);
-    if(!src) return;
-    if(held) held.classList.remove('on');
-    held=w; w.classList.add('on');
-    pop.innerHTML='<button class="x" aria-label="Close">×</button>'+(src.querySelector('.snb')||src).innerHTML;
-    pop.style.display='block';
-    pop.style.left='0px'; pop.style.top='0px';
-    var r=w.getBoundingClientRect(), b=pop.getBoundingClientRect();
-    var left=Math.min(Math.max(8, r.left-12), innerWidth-b.width-8);
-    // під словом, а якщо не влазить — над ним; саме слово не перекриваємо
-    var top = (r.bottom+10+b.height<=innerHeight) ? r.bottom+10 : Math.max(8, r.top-10-b.height);
-    pop.style.left=left+'px'; pop.style.top=top+'px';
+    // нема прихованого вмісту — колонка коментаря видима, тож закріплюємо в ній
+    if(w.dataset.n && root.dataset.notes==='on'){
+      if(pinned && pinned.id===w.dataset.n) unlit();
+      else litInColumn(w.dataset.n,{scroll:true,pin:true});
+    }
   }
   document.addEventListener('mouseover',function(e){
     var w=e.target.closest('.w');
@@ -629,9 +654,12 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   });
 
   document.addEventListener('click',function(e){
+    if(!e.target || typeof e.target.closest!=='function'){ closeNote(); return; }
     if(e.target.closest('#pop .x')){ closeNote(); return; }
     if(e.target.closest('#pop')) return;
-    var w=e.target.closest('.w');
+    // .w — слово з коментарем; [data-v] — слово зі словниковою статтею (для попапа,
+    // коли словник схований). closest ловить обидва.
+    var w=e.target.closest('.w,[data-v]');
     if(w){ if(w===held) closeNote(); else openNote(w); return; }
     closeNote();
   });
@@ -727,14 +755,16 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   alphLabel();
 
   function dlg(id,openBtn,closeBtn){
-    var d=document.getElementById(id);
-    document.getElementById(openBtn).onclick=function(){ if(d.showModal) d.showModal(); else d.setAttribute('open',''); };
-    document.getElementById(closeBtn).onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
+    var d=document.getElementById(id), o=document.getElementById(openBtn), c=document.getElementById(closeBtn);
+    if(!d||!o) return;   // «Core» відсутній у H&N/патристиків — тихо пропускаємо
+    o.onclick=function(){ if(d.showModal) d.showModal(); else d.setAttribute('open',''); };
+    if(c) c.onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
   }
   dlg('info','tInfo','infoClose'); dlg('core','tCore','coreClose');
   [['core','coreX'],['info','infoX'],['allnotes','allX']].forEach(function(p){
-    var d=document.getElementById(p[0]);
-    document.getElementById(p[1]).onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
+    var d=document.getElementById(p[0]), x=document.getElementById(p[1]);
+    if(!d||!x) return;
+    x.onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
   });
   // Скидання вигляду: викидаємо всі збережені налаштування й перезавантажуємось —
   // тоді застосуються дефолти з <html>. Зручно для тестування.

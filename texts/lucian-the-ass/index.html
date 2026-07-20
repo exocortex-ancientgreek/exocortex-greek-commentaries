@@ -125,6 +125,11 @@ html[data-vlink="on"] .voc div.vlit{background:var(--mark);border-radius:3px;box
 #pop b{font-family:"Gentium Plus",Georgia,serif;font-weight:600;font-size:15.4px}
 #pop .x{position:absolute;top:3px;right:4px;border:0;background:none;color:var(--muted);font:inherit;font-size:14px;cursor:pointer;line-height:1;padding:4px 6px;border-radius:5px}
 #pop .x:hover{color:var(--ink);background:#0000000d}
+/* Попап може містити кілька частин — коментар і словникову статтю разом. */
+#pop .pop-sec + .pop-sec{margin-top:9px;padding-top:9px;border-top:1px solid var(--rule)}
+#pop .pop-voc b{font-size:14.6px}
+/* Схований словник → слово клікабельне для попапа зі статтею (підказка курсором). */
+html[data-voc="off"] .p[data-v]{cursor:pointer}
 
 nav.pager{flex:0 0 auto;max-width:2000px;width:100%;margin:0 auto;padding:12px 18px 18px;display:flex;gap:10px;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
 nav.pager .btn{border-color:var(--rule);background:transparent;color:var(--ink)}
@@ -200,7 +205,7 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
     <button class="btn" id="tNotes" title="Show the commentary as a column">Commentary</button>
     <button class="btn" id="tVoc" title="Show the running vocabulary for this page">Vocabulary</button>
     <button class="btn" id="tSwap" title="Swap the two side columns">⇄</button>
-    <button class="btn" id="tCore">Core</button>
+    
     <button class="btn" id="tVlink" title="Point at a word to light its dictionary entry (and back)">Link</button>
     <button class="btn" id="tMissing" title="Also gloss words on this page that the book defines on another page">+gloss</button>
     <button class="btn" id="tAll" title="Show every note on this page at once">All notes</button>
@@ -1243,13 +1248,7 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   <button class="btn" id="next">→</button>
 </nav>
 
-<dialog id="core" data-alpheios-ignore="all">
-  <button class="dlg-x" id="coreX" aria-label="Close" title="Close">×</button>
-  <h3>Core vocabulary</h3>
-  <p class="sub">Words frequent enough that the commentary assumes them. Everything else is glossed beside its own page.</p>
-  <dl><div><dt>ἄγω:</dt> <dd>to lead</dd></div><div><dt>αἱρέω: αἱρήσω, 2 aor. εἷλον, ᾕρηκα, ᾕρημαι, ᾑρέθην:</dt> <dd>to take</dd></div><div><dt>αἴρω:</dt> <dd>to raise, take up</dd></div><div><dt>αἰσθάνομαι:</dt> <dd>to perceive, notice , see, hear</dd></div><div><dt>ἀκούω:</dt> <dd>to hear</dd></div><div><dt>ἀλείφω:</dt> <dd>to anoint with oil</dd></div><div><dt>ἁλίσκομαι:</dt> <dd>to be taken, be captured</dd></div><div><dt>ἁμαρτάνω: ἁμαρτήσομαι, 2 aor. ἥμαρτον, ἡμάρτηκα, ἡμάρτημαι, ἡμαρτήθην:</dt> <dd>to fail, go wrong</dd></div><div><dt>ἀμείβω: ἀμείψω, ἤμειψα:</dt> <dd>to change</dd></div><div><dt>ἀμύνομαι: ἀμυνοῦμαι, ἠμυνάμην:</dt> <dd>defend myself</dd></div><div><dt>ἀμύνω:</dt> <dd>to ward off, defend oneself</dd></div><div><dt>ἀναβοάω:</dt> <dd>to shout, utter a loud cry</dd></div><div><dt>ἀναιρέω:</dt> <dd>to take up, raise</dd></div><div><dt>ἀνακλίνω:</dt> <dd>to lean, lay down</dd></div><div><dt>ἀναμείγνυμι:</dt> <dd>to mix together</dd></div><div><dt>ἀναπίπτω:</dt> <dd>to fall back</dd></div><div><dt>ἀναστρέφω:</dt> <dd>to turn back, return</dd></div><div><dt>ἀνατέμνω:</dt> <dd>to cut open</dd></div><div><dt>ἀνεγείρω:</dt> <dd>to rouse</dd></div><div><dt>ἀνέχω:</dt> <dd>to hold up, bear, endure</dd></div><div><dt>ἀνίστημι:</dt> <dd>to make to stand up, raise up</dd></div><div><dt>ἀντέχω:</dt> <dd>to hold against</dd></div><div><dt>ἀντιμάχομαι:</dt> <dd>to fight back</dd></div><div><dt>ἀνύω:</dt> <dd>to effect, achieve, accomplish</dd></div><div><dt>ἀπάγω:</dt> <dd>to lead away, carry off</dd></div><div><dt>ἀπέρχομαι:</dt> <dd>to go away, depart</dd></div><div><dt>ἀποδείκνυμι:</dt> <dd>to appoint, assign</dd></div><div><dt>ἀποδίδωμι:</dt> <dd>to give back, restore, return</dd></div><div><dt>ἀποθνήσκω:</dt> <dd>to die</dd></div><div><dt>ἀποκρίνω:</dt> <dd>to separate, set apart; (mid.)answer</dd></div><div><dt>ἀποκτείνω:</dt> <dd>to kill, slay</dd></div><div><dt>ἀπόλλυμι:</dt> <dd>to destroy, kill</dd></div><div><dt>ἀποστρέφω:</dt> <dd>to turn back</dd></div><div><dt>ἀποτέμνω:</dt> <dd>to cut off, sever</dd></div><div><dt>ἅπτω:</dt> <dd>to touch, fasten upon</dd></div><div><dt>ἀρύω:</dt> <dd>to draw</dd></div><div><dt>ἄρχω:</dt> <dd>to begin</dd></div><div><dt>ἀφαιρέω:</dt> <dd>to take from, take away from</dd></div><div><dt>ἀφίημι:</dt> <dd>to send forth, discharge</dd></div><div><dt>ἀφικνέομαι:</dt> <dd>to arrive</dd></div><div><dt>ἄχθομαι:</dt> <dd>to be loaded down</dd></div><div><dt>βαίνω: βήσομαι, 2 aor. ἔβην, βέβηκα:</dt> <dd>to step</dd></div><div><dt>βάλλω:</dt> <dd>to throw</dd></div><div><dt>βλέπω:</dt> <dd>to see</dd></div><div><dt>βοάω:</dt> <dd>to shout</dd></div><div><dt>βούλομαι:</dt> <dd>to will, wish</dd></div><div><dt>γαμέω: γαμῶ, ἔγημα, γεγάμηκα:</dt> <dd>to marry</dd></div><div><dt>γελάω:</dt> <dd>to laugh</dd></div><div><dt>γίγνομαι:</dt> <dd>to become</dd></div><div><dt>γιγνώσκω:</dt> <dd>to know</dd></div><div><dt>δάκνω:</dt> <dd>to bite</dd></div><div><dt>δείδω:</dt> <dd>to fear</dd></div><div><dt>δείκνυμι:</dt> <dd>to bring to light, display, exhibit</dd></div><div><dt>δέομαι: δεήσομαι, δεδέημαι, ἐδεήθην:</dt> <dd>want, ask</dd></div><div><dt>δέχομαι:</dt> <dd>to take, accept</dd></div><div><dt>δέω (1): δήσω, ἔδησα, δέδεκα, δέδεμαι, ἐδέθην:</dt> <dd>to bind</dd></div><div><dt>δέω (2): δεήσω, ἐδέησα, δεδέηκα, δεδέημαι, ἐδεήθην:</dt> <dd>to need, lack (mid) ask</dd></div><div><dt>διαγιγνώσκω:</dt> <dd>to distinguish, discern</dd></div><div><dt>διάγω:</dt> <dd>to lead across</dd></div><div><dt>διαλέγω:</dt> <dd>to converse</dd></div><div><dt>διατρίβω:</dt> <dd>to spend time</dd></div><div><dt>διδάσκω:</dt> <dd>to teach</dd></div><div><dt>δίδωμι:</dt> <dd>to give</dd></div><div><dt>διώκω:</dt> <dd>to pursue</dd></div><div><dt>δοκέω:</dt> <dd>to seem</dd></div><div><dt>ἐγείρω: ἐγερῶ, ἤγειρα, 2 perf. ἔγρήγορα, ἐγήγερμαι, ἠγέρθην:</dt> <dd>to wake up</dd></div><div><dt>ἐγκαλέω:</dt> <dd>to call in, blame, accuse</dd></div><div><dt>ἐθέλω:</dt> <dd>to will, wish</dd></div><div><dt>εἶδον: pr. system provided by ὁράω, perf. οἶδα ‘know’, fut. εἴσομαι ‘shall know’:</dt> <dd>I saw</dd></div><div><dt>εἰμί: fut. ἔσομαι:</dt> <dd>to be</dd></div><div><dt>εἰσβάλλω:</dt> <dd>to throw into, fall upon</dd></div><div><dt>εἰσδέχομαι:</dt> <dd>to take into, admit, receive</dd></div><div><dt>εἰσέρχομαι:</dt> <dd>to go into, enter</dd></div><div><dt>ἐκβάλλω:</dt> <dd>to throw out, cast out of</dd></div><div><dt>ἐκτρίβω:</dt> <dd>to rub out, wear out</dd></div><div><dt>ἐκφύω:</dt> <dd>to grow out</dd></div><div><dt>ἐλαύνω:</dt> <dd>to drive, set moving</dd></div><div><dt>ἐλέγχω:</dt> <dd>to disgrace, expose</dd></div><div><dt>ἕλκω:</dt> <dd>to draw, drag</dd></div><div><dt>ἐμβαίνω:</dt> <dd>to step in, walk into</dd></div><div><dt>ἐμβάλλω:</dt> <dd>to throw in, put in</dd></div><div><dt>ἐνδίδωμι:</dt> <dd>to give in, allow</dd></div><div><dt>ἐνίστημι:</dt> <dd>to set against, resist</dd></div><div><dt>ἐντίθημι:</dt> <dd>to put into</dd></div><div><dt>ἐντυγχάνω:</dt> <dd>to fall upon, meet with</dd></div><div><dt>ἐξαιρέω:</dt> <dd>to take out, remove</dd></div><div><dt>ἐξανίστημι:</dt> <dd>to raise up</dd></div><div><dt>ἐξέρχομαι:</dt> <dd>to go out</dd></div><div><dt>ἐξευρίσκω:</dt> <dd>to find out, discover</dd></div><div><dt>ἐπάγω:</dt> <dd>to lead on, bring</dd></div><div><dt>ἐπαίρω:</dt> <dd>to lift up and set on</dd></div><div><dt>ἐπανάγω:</dt> <dd>to lead back</dd></div><div><dt>ἐπανίστημι:</dt> <dd>to set up again</dd></div><div><dt>ἐπεισέρχομαι:</dt> <dd>to come in after</dd></div><div><dt>ἐπέρχομαι:</dt> <dd>to come upon, approach</dd></div><div><dt>ἐπιβαίνω:</dt> <dd>to go on</dd></div><div><dt>ἐπιδείκνυμι:</dt> <dd>to show, exhibit</dd></div><div><dt>ἐπιδέχομαι:</dt> <dd>to admit</dd></div><div><dt>ἐπιδίδωμι:</dt> <dd>to give besides, lend</dd></div><div><dt>ἐπικλίνω:</dt> <dd>to incline, tilt</dd></div><div><dt>ἐπιλαμβάνω:</dt> <dd>to lay hold of, seize, attack</dd></div><div><dt>ἐπιπίπτω:</dt> <dd>to fall upon, attack</dd></div><div><dt>ἐπιρριπτέω:</dt> <dd>throw oneself</dd></div><div><dt>ἐπιτίθημι:</dt> <dd>to lay upon, burden</dd></div><div><dt>ἐπιτρέπω:</dt> <dd>to turn towards, attack</dd></div><div><dt>ἐπιχέω:</dt> <dd>to pour over</dd></div><div><dt>ἕπομαι:</dt> <dd>to follow</dd></div><div><dt>ἐράω: imp. ἤρων, aor. ἠράσθην:</dt> <dd>to love</dd></div><div><dt>ἐργάζομαι:</dt> <dd>to work, labor</dd></div><div><dt>ἔρχομαι: fut. εἶμι, 2 aor. ἦλθον, 2 perf. ἐλήλυθα:</dt> <dd>to come or go to</dd></div><div><dt>ἐσθίω:</dt> <dd>to eat</dd></div><div><dt>εὑρίσκω:</dt> <dd>to find</dd></div><div><dt>εὐφραίνω:</dt> <dd>to cheer, delight, gladden</dd></div><div><dt>εὔχομαι:</dt> <dd>to pray</dd></div><div><dt>ἐφίστημι:</dt> <dd>to set or place upon</dd></div><div><dt>ἔχω: ἕξω, 2 aor. ἔσχον, ἔσχηκα, imperf. εἶχον:</dt> <dd>to have</dd></div><div><dt>ζάω:</dt> <dd>to live</dd></div><div><dt>ζεύγνυμι: ζεύξω, ἔζευξα, ἔξευγμαι, ἐζεύχθην:</dt> <dd>to yoke</dd></div><div><dt>ἥδομαι: ἡσθήσομαι, ἥσθην:</dt> <dd>to be happy</dd></div><div><dt>θαυμάζω:</dt> <dd>to wonder, marvel, admire</dd></div><div><dt>θέω:</dt> <dd>to run</dd></div><div><dt>θνῄσκω: θανοῦμαι, 2 aor. -έθανον, τέθνηκα:</dt> <dd>to die</dd></div><div><dt>θύω:</dt> <dd>to sacrifice</dd></div><div><dt>ἵημι: ἥσω, ἧκα, εἷκα, εἷμαι, εἵθην:</dt> <dd>to let go, relax, to send forth</dd></div><div><dt>ἵστημι:</dt> <dd>to make to stand</dd></div><div><dt>καίω:</dt> <dd>to light, kindle</dd></div><div><dt>καλέω:</dt> <dd>to call</dd></div><div><dt>καταβαίνω:</dt> <dd>to go down</dd></div><div><dt>καταβάλλω:</dt> <dd>to throw down, overthrow</dd></div><div><dt>καταγιγνώσκω:</dt> <dd>to remark, discover</dd></div><div><dt>κατάγω:</dt> <dd>to lead down, bring down</dd></div><div><dt>καταδέω:</dt> <dd>to bind fast, tie up</dd></div><div><dt>καταλαμβάνω:</dt> <dd>to seize upon, lay hold of</dd></div><div><dt>καταλείπω:</dt> <dd>to leave behind</dd></div><div><dt>καταπίνω:</dt> <dd>to gulp down</dd></div><div><dt>καταπίπτω:</dt> <dd>to fall down, drop down</dd></div><div><dt>κατέρχομαι:</dt> <dd>to go down</dd></div><div><dt>κελεύω:</dt> <dd>to urge, command, order</dd></div><div><dt>κηρύττω:</dt> <dd>to proclaim, shout</dd></div><div><dt>κλάω:</dt> <dd>to break, tear</dd></div><div><dt>κλείω: κλείσω, ἔκλεισα, κέκλειμαι, ἐκλείσθην:</dt> <dd>to shut</dd></div><div><dt>κλέπτω:</dt> <dd>to steal</dd></div><div><dt>κλίνω: κλινῶ, ἔκλινα, κέκλικα, κέκλιμαι, -εκλίνην:</dt> <dd>to bend</dd></div><div><dt>κομίζω:</dt> <dd>to take care of, carry</dd></div><div><dt>κόπτω: κόψω, ἔκοψα, -κέκοφα, κέκομμαι, -εκόπην:</dt> <dd>to strike</dd></div><div><dt>κρίνω:</dt> <dd>to choose</dd></div><div><dt>κρούω:</dt> <dd>to strike</dd></div><div><dt>κρύπτω:</dt> <dd>to hide, cover</dd></div><div><dt>κτάομαι:</dt> <dd>to get, gain, acquire</dd></div><div><dt>κτείνω:</dt> <dd>to kill, slay</dd></div><div><dt>λαγχάνω:</dt> <dd>to obtain by lot</dd></div><div><dt>λαμβάνω: λήψομαι, ἔλαβον, εἴληφα, εἴλημμαι, ἐλήφθην:</dt> <dd>to take</dd></div><div><dt>λάμπω: λάμψω, ἔλαμψα, λέλαμπα, -λέλησμαι:</dt> <dd>to shine</dd></div><div><dt>λανθάνω: λήσω, ἔλαθον, λέληθα:</dt> <dd>to escape notice</dd></div><div><dt>λέγω:</dt> <dd>to say</dd></div><div><dt>λείπω: λείψω, ἔλιπον, λέλοιπα, λέλειμμαι, ἐλείφθην:</dt> <dd>leave</dd></div><div><dt>λύω:</dt> <dd>to loose</dd></div><div><dt>μανθάνω:</dt> <dd>to learn</dd></div><div><dt>μάχομαι:</dt> <dd>to fight</dd></div><div><dt>μέμφομαι: μέμψομαι, ἐμεμψάμην, ἐμέμφθην:</dt> <dd>to blame</dd></div><div><dt>μένω:</dt> <dd>to stay, remain</dd></div><div><dt>μεταπίπτω:</dt> <dd>to fall differently, change</dd></div><div><dt>μετατίθημι:</dt> <dd>to change, alter</dd></div><div><dt>μεταφέρω:</dt> <dd>to carry over, transfer</dd></div><div><dt>μίγνυμι: μείξω, ἔμειξα, μέμειγμαι, ἐμείχθην:</dt> <dd>to mix</dd></div><div><dt>νομίζω: νομιῶ, ἐνόμισα, νενόμικα, νενόμισμαι, ἐνομίσθην:</dt> <dd>to believe</dd></div><div><dt>οἴομαι:</dt> <dd>to suppose, think, imagine</dd></div><div><dt>ὄλλυμι: ολῶ, -ώλεσα, -ολώλεκα, -όλωλα:</dt> <dd>to destroy</dd></div><div><dt>ὁράω: ὄψομαι, 2 aor. εἶδον, ἑόρακα and ἑώρακα, ὤφθην, imperf. ἑώρων:</dt> <dd>to see</dd></div><div><dt>ὀργίζω: -οργιῶ, ὤργισα, ὤργισμαι, ὠργίσθην:</dt> <dd>to make angry</dd></div><div><dt>παίω:</dt> <dd>to strike, hit</dd></div><div><dt>παλαίω:</dt> <dd>to wrestle</dd></div><div><dt>παραβάλλω:</dt> <dd>to throw beside</dd></div><div><dt>παραδίδωμι:</dt> <dd>to hand over</dd></div><div><dt>παρακαλέω:</dt> <dd>to call to, summon, invite</dd></div><div><dt>παρακατακλίνω:</dt> <dd>to lay down beside</dd></div><div><dt>παραλαμβάνω:</dt> <dd>to receive, take up</dd></div><div><dt>παρατίθημι:</dt> <dd>to place before</dd></div><div><dt>παραφέρω:</dt> <dd>to bring to one’s side</dd></div><div><dt>πάρειμι:</dt> <dd>to be present</dd></div><div><dt>παρεισέρχομαι:</dt> <dd>to come in beside</dd></div><div><dt>παρελαύνω:</dt> <dd>to drive past</dd></div><div><dt>παρέρχομαι:</dt> <dd>to go by, pass</dd></div><div><dt>παρέχω:</dt> <dd>to furnish, provide, supply</dd></div><div><dt>παρίστημι:</dt> <dd>to make to stand beside</dd></div><div><dt>πάσχω:</dt> <dd>to feel, suffer</dd></div><div><dt>πείθω:</dt> <dd>to win over, persuade</dd></div><div><dt>πεινάω: πεινήσω, ἐπείνησα, πεπαίνηκα:</dt> <dd>to be hungry</dd></div><div><dt>πέμπω:</dt> <dd>to send, dispatch</dd></div><div><dt>περιβάλλω:</dt> <dd>to throw around, embrace</dd></div><div><dt>περιέρχομαι:</dt> <dd>to go around</dd></div><div><dt>περιίστημι:</dt> <dd>to place round</dd></div><div><dt>περιλαμβάνω:</dt> <dd>to seize around, embrace</dd></div><div><dt>περιμένω:</dt> <dd>to wait for, await</dd></div><div><dt>περιπίπτω:</dt> <dd>to fall in with, encounter</dd></div><div><dt>περιφέρω:</dt> <dd>to carry around, turn around</dd></div><div><dt>πέτομαι: πτήσομαι, 2 aor. –επτόμην:</dt> <dd>to fly</dd></div><div><dt>πήγνυμι:</dt> <dd>to fasten</dd></div><div><dt>πίνω:</dt> <dd>to drink</dd></div><div><dt>πίπτω:</dt> <dd>to fall, fall down</dd></div><div><dt>πλέω:</dt> <dd>to sail</dd></div><div><dt>πνέω:</dt> <dd>to blow</dd></div><div><dt>ποθέω: ποθήσω or ποθέσομαι, ἐπόθησα or ἐπόθεσα:</dt> <dd>to desire, miss</dd></div><div><dt>πράττω:</dt> <dd>to do</dd></div><div><dt>προδίδωμι:</dt> <dd>to give over, betray</dd></div><div><dt>προέρχομαι:</dt> <dd>to go forth</dd></div><div><dt>προπίνω:</dt> <dd>to drink before</dd></div><div><dt>προσάγω:</dt> <dd>to bring to</dd></div><div><dt>προσβάλλω:</dt> <dd>to throw to</dd></div><div><dt>προσδέω:</dt> <dd>need besides</dd></div><div><dt>πρόσειμι:</dt> <dd>to approach</dd></div><div><dt>προσέρχομαι:</dt> <dd>to go to</dd></div><div><dt>προσέχω:</dt> <dd>to hold to, offer</dd></div><div><dt>προσμένω:</dt> <dd>to bide one’s time, await</dd></div><div><dt>προστίθημι:</dt> <dd>to put to, place upon</dd></div><div><dt>προσφέρω:</dt> <dd>to bring to</dd></div><div><dt>πυνθάνομαι:</dt> <dd>to learn</dd></div><div><dt>ῥήγνυμι:</dt> <dd>to break</dd></div><div><dt>ῥίπτω:</dt> <dd>to throw, cast, hurl</dd></div><div><dt>σκάπτω:</dt> <dd>to dig</dd></div><div><dt>σκέπτομαι:</dt> <dd>to look about, look for</dd></div><div><dt>σκώπτω:</dt> <dd>to mock, jeer, scoff at</dd></div><div><dt>σπάω:</dt> <dd>to draw</dd></div><div><dt>στάζω: ἔσταξα, -έσταγμαι, -εστάχθην:</dt> <dd>to drip</dd></div><div><dt>στρέφω:</dt> <dd>to turn</dd></div><div><dt>συγκλείω:</dt> <dd>to shut up</dd></div><div><dt>συλλαμβάνω:</dt> <dd>to collect, gather together</dd></div><div><dt>συμβάλλω:</dt> <dd>to throw together, infer</dd></div><div><dt>συμπίπτω:</dt> <dd>to fall together, attack</dd></div><div><dt>συμφέρω:</dt> <dd>to bring together, gather, collect</dd></div><div><dt>συνέχω:</dt> <dd>to hold together</dd></div><div><dt>συνίημι:</dt> <dd>to bring together, understand</dd></div><div><dt>συντίθημι:</dt> <dd>to put together, arrange</dd></div><div><dt>σώζω: σώσω, ἔσωσα, σέσωκα, ἐσώθην:</dt> <dd>to save</dd></div><div><dt>τείνω: τενῶ, -έτεινα, -τέτακα, τέταμαι, -ετάθην:</dt> <dd>stretch</dd></div><div><dt>τέμνω: τεμῶ, 2 aor. ἔτεμον, -τέτμηκα, τέτμημαι, ἐτμήθην:</dt> <dd>to cut</dd></div><div><dt>τίθημι:</dt> <dd>to set, put, place</dd></div><div><dt>τιτρώσκω:</dt> <dd>to wound</dd></div><div><dt>τρέπω: τρέψω, ἔτρεψα, τέτροφα, ἐτράπην:</dt> <dd>to turn</dd></div><div><dt>τρέφω:</dt> <dd>to raise, care for</dd></div><div><dt>τρέχω:</dt> <dd>to run</dd></div><div><dt>τρίβω: τρίψω, ἔτριψα, 2 perf. τέτριφα, τέτριμμαι, ἐτρίβην:</dt> <dd>to rub</dd></div><div><dt>τυγχάνω:</dt> <dd>to hit, happen upon</dd></div><div><dt>ὑπακούω:</dt> <dd>to listen, obey</dd></div><div><dt>ὑπεξέρχομαι:</dt> <dd>to go out from under, escape</dd></div><div><dt>ὑπερβάλλω:</dt> <dd>to throw beyond, stick out beyond</dd></div><div><dt>ὑπεροράω:</dt> <dd>to look upon, disdain</dd></div><div><dt>ὑπέχω:</dt> <dd>to undergo</dd></div><div><dt>ὑπισχνέομαι:</dt> <dd>to promise</dd></div><div><dt>ὑποβάλλω:</dt> <dd>to throw down, put under, suggest</dd></div><div><dt>ὑποβλέπω:</dt> <dd>to look up</dd></div><div><dt>ὑποδέχομαι:</dt> <dd>to receive (in one’s home), host</dd></div><div><dt>ὑποζεύγνυμι:</dt> <dd>to put under the yoke</dd></div><div><dt>ὑπομένω:</dt> <dd>to endure, survive</dd></div><div><dt>ὑφίστημι:</dt> <dd>to place under</dd></div><div><dt>φαίνω: φανῶ, ἔφηνα, πέφηνα, πέφασμαι, ἐφάνην:</dt> <dd>to show</dd></div><div><dt>φέρω:</dt> <dd>to bear, carry, endure</dd></div><div><dt>φεύγω:</dt> <dd>to flee, run away</dd></div><div><dt>φημί: φήσω, ἔφησα:</dt> <dd>to say</dd></div><div><dt>φυλάττω:</dt> <dd>to keep watch, guard</dd></div><div><dt>φύω:</dt> <dd>to grow, produce</dd></div><div><dt>χαίρω:</dt> <dd>to rejoice, be glad</dd></div><div><dt>χαλεπαίνω:</dt> <dd>to be sore, be grievous</dd></div><div><dt>χέω: fut. χέω, aor. ἔχεα, κέχυκα, κέχυμαι, ἐχύθην:</dt> <dd>to pour</dd></div><div><dt>χράομαι:</dt> <dd>to use, enjoy (+ dat.)</dd></div><div><dt>χρίω: χρίσω, ἔχρισα, κέχριμαι, ἐχρίσθην:</dt> <dd>to anoint</dd></div><div><dt>ψεύδομαι:</dt> <dd>to lie, pretend</dd></div></dl>
-  <button class="btn close" id="coreClose" style="margin-top:16px;width:100%;border-color:var(--rule);background:transparent;color:var(--ink)">Close</button>
-</dialog>
+
 
 <dialog id="info" data-alpheios-ignore="all">
   <button class="dlg-x" id="infoX" aria-label="Close" title="Close">×</button>
@@ -1428,25 +1427,45 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
     else if(opts && opts.scroll) sn.scrollIntoView({block:'nearest'});
     return true;
   }
+  // Вміст попапа — те, чого зараз НЕ видно в колонках: коментар (якщо колонка
+  // коментаря схована) + словникова стаття (якщо схований словник). Схований словник +
+  // клік на слово = стаття у попапі; є ще й коментар — виводимо разом.
+  function popupContentFor(w){
+    var parts=[];
+    if(root.dataset.notes!=='on' && w.dataset.n){
+      var src=document.getElementById(w.dataset.n);
+      if(src) parts.push('<div class="pop-sec">'+(src.querySelector('.snb')||src).innerHTML+'</div>');
+    }
+    if(root.dataset.voc!=='on' && w.dataset.v){
+      var seen={};
+      w.dataset.v.split(' ').forEach(function(id){
+        if(seen[id]) return; seen[id]=1;
+        var e=document.getElementById(id);
+        if(e) parts.push('<div class="pop-sec pop-voc"><b>'+e.querySelector('dt').innerHTML+'</b> '+e.querySelector('dd').innerHTML+'</div>');
+      });
+    }
+    return parts.join('');
+  }
   function openNote(w){
-    if(root.dataset.notes==='on'){
-      // повторний клік по тому самому слову — відкріпити
-      if(pinned && pinned.id===w.dataset.n) unlit();
-      else litInColumn(w.dataset.n,{scroll:true,pin:true});
+    var content=popupContentFor(w);
+    if(content){
+      if(held) held.classList.remove('on');
+      held=w; w.classList.add('on');
+      pop.innerHTML='<button class="x" aria-label="Close">×</button>'+content;
+      pop.style.display='block';
+      pop.style.left='0px'; pop.style.top='0px';
+      var r=w.getBoundingClientRect(), b=pop.getBoundingClientRect();
+      var left=Math.min(Math.max(8, r.left-12), innerWidth-b.width-8);
+      // під словом, а якщо не влазить — над ним; саме слово не перекриваємо
+      var top = (r.bottom+10+b.height<=innerHeight) ? r.bottom+10 : Math.max(8, r.top-10-b.height);
+      pop.style.left=left+'px'; pop.style.top=top+'px';
       return;
     }
-    var src=document.getElementById(w.dataset.n);
-    if(!src) return;
-    if(held) held.classList.remove('on');
-    held=w; w.classList.add('on');
-    pop.innerHTML='<button class="x" aria-label="Close">×</button>'+(src.querySelector('.snb')||src).innerHTML;
-    pop.style.display='block';
-    pop.style.left='0px'; pop.style.top='0px';
-    var r=w.getBoundingClientRect(), b=pop.getBoundingClientRect();
-    var left=Math.min(Math.max(8, r.left-12), innerWidth-b.width-8);
-    // під словом, а якщо не влазить — над ним; саме слово не перекриваємо
-    var top = (r.bottom+10+b.height<=innerHeight) ? r.bottom+10 : Math.max(8, r.top-10-b.height);
-    pop.style.left=left+'px'; pop.style.top=top+'px';
+    // нема прихованого вмісту — колонка коментаря видима, тож закріплюємо в ній
+    if(w.dataset.n && root.dataset.notes==='on'){
+      if(pinned && pinned.id===w.dataset.n) unlit();
+      else litInColumn(w.dataset.n,{scroll:true,pin:true});
+    }
   }
   document.addEventListener('mouseover',function(e){
     var w=e.target.closest('.w');
@@ -1497,9 +1516,12 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   });
 
   document.addEventListener('click',function(e){
+    if(!e.target || typeof e.target.closest!=='function'){ closeNote(); return; }
     if(e.target.closest('#pop .x')){ closeNote(); return; }
     if(e.target.closest('#pop')) return;
-    var w=e.target.closest('.w');
+    // .w — слово з коментарем; [data-v] — слово зі словниковою статтею (для попапа,
+    // коли словник схований). closest ловить обидва.
+    var w=e.target.closest('.w,[data-v]');
     if(w){ if(w===held) closeNote(); else openNote(w); return; }
     closeNote();
   });
@@ -1595,14 +1617,16 @@ dialog#allnotes .close{margin-top:14px;width:100%;border-color:var(--rule);backg
   alphLabel();
 
   function dlg(id,openBtn,closeBtn){
-    var d=document.getElementById(id);
-    document.getElementById(openBtn).onclick=function(){ if(d.showModal) d.showModal(); else d.setAttribute('open',''); };
-    document.getElementById(closeBtn).onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
+    var d=document.getElementById(id), o=document.getElementById(openBtn), c=document.getElementById(closeBtn);
+    if(!d||!o) return;   // «Core» відсутній у H&N/патристиків — тихо пропускаємо
+    o.onclick=function(){ if(d.showModal) d.showModal(); else d.setAttribute('open',''); };
+    if(c) c.onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
   }
   dlg('info','tInfo','infoClose'); dlg('core','tCore','coreClose');
   [['core','coreX'],['info','infoX'],['allnotes','allX']].forEach(function(p){
-    var d=document.getElementById(p[0]);
-    document.getElementById(p[1]).onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
+    var d=document.getElementById(p[0]), x=document.getElementById(p[1]);
+    if(!d||!x) return;
+    x.onclick=function(){ if(d.close) d.close(); else d.removeAttribute('open'); };
   });
   // Скидання вигляду: викидаємо всі збережені налаштування й перезавантажуємось —
   // тоді застосуються дефолти з <html>. Зручно для тестування.
