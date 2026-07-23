@@ -107,8 +107,8 @@ first — buy a print copy or send them something. That matters more than anythi
 
 ### Patristic Readers
 
-[site](https://patristicreaders.com/)
-> The reader editions are the work of “Seumas”; the free PDFs are on the site and printed copies on Amazon.
+[site](https://thepatrologist.com/) · [the Patristic Readers](https://patristicreaders.com/) · [Patreon](https://www.patreon.com/thepatrologist) · [YouTube](https://www.youtube.com/channel/UCKvJmmtC1JYVLMdTTT98bAw) · **[donate](https://www.paypal.com/paypalme/thepatrologist)**
+> The Patristic Readers are by Seumas Macdonald — “The Patrologist”. The free PDFs are on his site; printed copies on Amazon.
 
 | Text | Author | Pages | Lines | Notes | Source |
 |---|---|--:|--:|--:|---|
